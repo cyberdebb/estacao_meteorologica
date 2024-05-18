@@ -1,6 +1,6 @@
 #include <DHT.h>
 
-DHT dht(26,DHT11);
+DHT dht(15,DHT11);
 
 void setup() {
   // put your setup code here, to run once:
