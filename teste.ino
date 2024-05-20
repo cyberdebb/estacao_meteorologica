@@ -13,10 +13,11 @@ DHT dht(DHTPIN, DHTTYPE);
 #define BMP_SDA 21
 #define BMP_SCL 22
 
-// Define the I2C address and initialize the BMP280 object
 Adafruit_BMP280 bmp; // I2C
 
 void setup() {
+  Wire.begin(21, 22); // SDA, SCL
+
   // Start the serial communication
   Serial.begin(115200);
   while (!Serial) delay(100);   // Wait for native USB
