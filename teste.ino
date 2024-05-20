@@ -1,3 +1,5 @@
+// integração bmp e dht
+
 #include <Wire.h>
 #include <Adafruit_BMP280.h>
 #include <DHT.h>

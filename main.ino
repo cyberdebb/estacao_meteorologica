@@ -1,14 +1,12 @@
+/***************************************************************************
+BMP280
+ ***************************************************************************/
+
 #include <Wire.h>
 #include <Adafruit_BMP280.h>
-#include <DHT.h>
 
 // Define the I2C address and initialize the BMP280 object
 Adafruit_BMP280 bmp; // I2C
-
-// Define the DHT sensor and its pin
-#define DHTPIN 26
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   // Start the serial communication
@@ -21,10 +19,7 @@ void setup() {
     while (1) delay(10);  // Loop forever if sensor initialization fails
   }
 
-  // Initialize the DHT11 sensor
-  dht.begin();
-  
-  // Default settings for BMP280 from datasheet
+  // Default settings from datasheet
   bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
                   Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
                   Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
@@ -33,29 +28,18 @@ void setup() {
 }
 
 void loop() {
-  // Read temperature and pressure from BMP280
-  float bmp_temp = bmp.readTemperature();
+  // Read temperature and pressure
+  float temp = bmp.readTemperature();
   float pressure = bmp.readPressure();
 
-  // Read temperature and humidity from DHT11
-  float dht_temp = dht.readTemperature();
-  float humidity = dht.readHumidity();
-
-  // Print BMP280 readings to the serial monitor
-  Serial.print("BMP280 - TEMP C: ");
-  Serial.print(bmp_temp);
-  Serial.print(" -- Pressure: ");
+  // Print temperature and pressure to the serial monitor
+  Serial.print("TEMP C ");
+  Serial.print(temp);
+  Serial.print(" -- Pressure ");
   Serial.print(pressure);
   Serial.println(" Pa");
 
-  // Print DHT11 readings to the serial monitor
-  Serial.print("DHT11 - TEMP C: ");
-  Serial.print(dht_temp);
-  Serial.print(" -- Humidity: ");
-  Serial.print(humidity);
-  Serial.println(" %");
-
-  // Optional: Read and print altitude from BMP280
+  // Optional: Read and print altitude
   Serial.print("Approx altitude = ");
   Serial.print(bmp.readAltitude(1013.25)); /* Adjusted to local forecast! */
   Serial.println(" m");
@@ -64,6 +48,38 @@ void loop() {
   delay(2000);
 }
 
+/***************************************************************************
+DHT11
+ ***************************************************************************/
+
+#include <DHT.h>
+
+DHT dht(26,DHT11);
+
+void setup() {
+ dht.begin();
+ // Initialize the BMP280 sensor
+  if (!dht.begin()) {
+    Serial.println(F("Could not find a valid dht sensor, check wiring or try a different address!"));
+    while (1) delay(10);  // Loop forever if sensor initialization fails
+  }
+ delay(2000);
+
+ Serial.begin(115200);
+}
+
+void loop() {
+ float temp = dht.readTemperature();
+ float umidade = dht.readHumidity();
+
+ Serial.print("TEMP C ");
+ Serial.print(temp);
+
+ Serial.print(" -- Umidade ");
+ Serial.print(umidade);
+ Serial.println(" % ");
+ delay(2000);
+}
 
 
 /***************************************************************************
