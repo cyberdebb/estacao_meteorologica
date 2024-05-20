@@ -1,72 +1,94 @@
-// integração bmp e dht
-
-#include <Wire.h>
-#include <Adafruit_BMP280.h>
 #include <DHT.h>
 
-// Define the DHT sensor and its pin
-#define DHTPIN 15
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(15,DHT11);
 
-// Define the BMP sensor and its pin
-#define BMP_SDA 21
-#define BMP_SCL 22
+// Pin definitions
+#define HALL_SENSOR_PIN 2  // ESP32 pin where the hall sensor is connected
 
-Adafruit_BMP280 bmp; // I2C
+// Constants definitions
+const int PERIOD = 5000;  // Measurement period in milliseconds
+const int DELAY_TIME = 2000;  // Time between samples in milliseconds
+const int RADIUS = 147;  // Anemometer radius in mm
+
+// Variable definitions
+unsigned int sampleNumber = 0;  // Sample number
+volatile unsigned int counter = 0; // Magnet counter for sensor
+unsigned int rpm = 0;  // Revolutions per minute
+float windSpeedMetersPerSecond = 0;  // Wind speed in m/s
+float windSpeedKilometersPerHour = 0;  // Wind speed in km/h
 
 void setup() {
-  Wire.begin(21, 22); // SDA, SCL
+  // Initialize the pin
+  pinMode(HALL_SENSOR_PIN, INPUT_PULLUP);  // Set pin as input with internal pull-up
 
-  // Start the serial communication
-  Serial.begin(115200);
-  while (!Serial) delay(100);   // Wait for native USB
-
-  // Initialize the BMP280 sensor
-  if (!bmp.begin()) {
-    Serial.println(F("Could not find a valid BMP280 sensor, check wiring or try a different address!"));
-    while (1) delay(10);  // Loop forever if sensor initialization fails
-  }
-
-  // Initialize the DHT11 sensor
+   // put your setup code here, to run once:
   dht.begin();
+  delay(2000);
+
+  // Start serial communication
+  Serial.begin(9600);
   
-  // Default settings for BMP280 from datasheet
-  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
-                  Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
-                  Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
-                  Adafruit_BMP280::FILTER_X16,      /* Filtering. */
-                  Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
+  // Attach interrupt
+  attachInterrupt(digitalPinToInterrupt(HALL_SENSOR_PIN), countRevolution, RISING);
 }
 
 void loop() {
-  // Read temperature and pressure from BMP280
-  float bmp_temp = bmp.readTemperature();
-  float pressure = bmp.readPressure();
+  sampleNumber++;
+  Serial.print(sampleNumber);
+  Serial.print(": Start measurement...");
+  measureWindSpeed();
+  Serial.println(" finished.");
+  Serial.print("Counter: ");
+  Serial.print(counter);
+  Serial.print("; RPM: ");
+  calculateRPM();
+  Serial.print(rpm);
+  Serial.print("; Wind speed: ");
+  
+  // Print wind speed in m/s
+  calculateWindSpeedMetersPerSecond();
+  Serial.print(windSpeedMetersPerSecond);
+  Serial.print(" [m/s] ");              
+  
+  // Print wind speed in km/h
+  calculateWindSpeedKilometersPerHour();
+  Serial.print(windSpeedKilometersPerHour);
+  Serial.print(" [km/h] ");  
+  Serial.println();
 
-  // Read temperature and humidity from DHT11
-  float dht_temp = dht.readTemperature();
-  float humidity = dht.readHumidity();
+  float temp = dht.readTemperature();
+  float umidade = dht.readHumidity();
 
-  // Print BMP280 readings to the serial monitor
-  Serial.print("BMP280 - TEMP C: ");
-  Serial.print(bmp_temp);
-  Serial.print(" -- Pressure: ");
-  Serial.print(pressure);
-  Serial.println(" Pa");
+  Serial.print("TEMP C ");
+  Serial.print(temp);
 
-  // Print DHT11 readings to the serial monitor
-  Serial.print("DHT11 - TEMP C: ");
-  Serial.print(dht_temp);
-  Serial.print(" -- Humidity: ");
-  Serial.print(humidity);
-  Serial.println(" %");
+  Serial.print(" -- Umidade ");
+  Serial.print(umidade);
+  Serial.println(" % ");
 
-  // Optional: Read and print altitude from BMP280
-  Serial.print("Approx altitude = ");
-  Serial.print(bmp.readAltitude(1013.25)); /* Adjusted to local forecast! */
-  Serial.println(" m");
+  delay(DELAY_TIME);  // Delay between prints
+}
 
-  // Delay between readings
-  delay(2000);
+void measureWindSpeed() {
+  counter = 0;  
+  long startTime = millis();
+  while (millis() < startTime + PERIOD) {
+    // Wait for the period to complete
+  }
+}
+
+void calculateRPM() {
+  rpm = (counter * 60) / (PERIOD / 1000);  // Calculate RPM
+}
+
+void calculateWindSpeedMetersPerSecond() {
+  windSpeedMetersPerSecond = ((4 * PI * RADIUS * rpm) / 60) / 1000;  // Calculate wind speed in m/s
+}
+
+void calculateWindSpeedKilometersPerHour() {
+  windSpeedKilometersPerHour = windSpeedMetersPerSecond * 3.6;  // Convert m/s to km/h
+}
+
+void countRevolution() {
+  counter++;  // Increment counter for each revolution detected
 }

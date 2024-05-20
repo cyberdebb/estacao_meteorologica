@@ -54,21 +54,18 @@ DHT11
 
 #include <DHT.h>
 
-DHT dht(26,DHT11);
+DHT dht(15,DHT11);
 
 void setup() {
+  // put your setup code here, to run once:
  dht.begin();
- // Initialize the BMP280 sensor
-  if (!dht.begin()) {
-    Serial.println(F("Could not find a valid dht sensor, check wiring or try a different address!"));
-    while (1) delay(10);  // Loop forever if sensor initialization fails
-  }
  delay(2000);
 
  Serial.begin(115200);
 }
 
 void loop() {
+  // put your main code here, to run repeatedly:
  float temp = dht.readTemperature();
  float umidade = dht.readHumidity();
 
@@ -85,128 +82,145 @@ void loop() {
 /***************************************************************************
 Anemometro Arduino SV10
  ***************************************************************************/
+// usar 5V
 
 // Pin definitions
-# define Hall sensor 2 //  Pino digital 2
+#define HALL_SENSOR_PIN 2  // ESP32 pin where the hall sensor is connected
 
 // Constants definitions
-const float pi = 3.14159265; // Numero pi
-int period = 5000; // Tempo de medida(miliseconds)
-int delaytime = 2000; // Time between samples (miliseconds)
-int radius = 147; // Raio do anemometro(mm)
+const int PERIOD = 5000;  // Measurement period in milliseconds
+const int DELAY_TIME = 2000;  // Time between samples in milliseconds
+const int RADIUS = 147;  // Anemometer radius in mm
 
 // Variable definitions
-unsigned int Sample = 0; // Sample number
-unsigned int counter = 0; // magnet counter for sensor
-unsigned int RPM = 0; // Revolutions per minute
-float speedwind = 0; // Wind speed (m/s)
-float windspeed = 0; // Wind speed (km/h)
+unsigned int sampleNumber = 0;  // Sample number
+volatile unsigned int counter = 0; // Magnet counter for sensor
+unsigned int rpm = 0;  // Revolutions per minute
+float windSpeedMetersPerSecond = 0;  // Wind speed in m/s
+float windSpeedKilometersPerHour = 0;  // Wind speed in km/h
 
-void setup()
-{
-  // Set the pins
-  pinMode(2, INPUT);
-  digitalWrite(2, HIGH); //internall pull-up active
-    
-  //Start serial 
-  Serial.begin(9600); // sets the serial port to 9600 baud
-  }
+void setup() {
+  // Initialize the pin
+  pinMode(HALL_SENSOR_PIN, INPUT_PULLUP);  // Set pin as input with internal pull-up
 
-void loop()
-{
-  Sample++;
-  Serial.print(Sample);
+  // Start serial communication
+  Serial.begin(9600);
+  
+  // Attach interrupt
+  attachInterrupt(digitalPinToInterrupt(HALL_SENSOR_PIN), countRevolution, RISING);
+}
+
+void loop() {
+  sampleNumber++;
+  Serial.print(sampleNumber);
   Serial.print(": Start measurement...");
-  windvelocity();
-  Serial.println("   finished.");
+  measureWindSpeed();
+  Serial.println(" finished.");
   Serial.print("Counter: ");
   Serial.print(counter);
-  Serial.print(";  RPM: ");
-  RPMcalc();
-  Serial.print(RPM);
-  Serial.print(";  Wind speed: ");
+  Serial.print("; RPM: ");
+  calculateRPM();
+  Serial.print(rpm);
+  Serial.print("; Wind speed: ");
   
-//print m/s  
-  WindSpeed();
-  Serial.print(windspeed);
+  // Print wind speed in m/s
+  calculateWindSpeedMetersPerSecond();
+  Serial.print(windSpeedMetersPerSecond);
   Serial.print(" [m/s] ");              
   
-//print km/h  
-  SpeedWind();
-  Serial.print(speedwind);
+  // Print wind speed in km/h
+  calculateWindSpeedKilometersPerHour();
+  Serial.print(windSpeedKilometersPerHour);
   Serial.print(" [km/h] ");  
   Serial.println();
 
-
-  delay(delaytime); //delay between prints
+  delay(DELAY_TIME);  // Delay between prints
 }
 
-// Measure wind speed
-void windvelocity(){
-  speedwind = 0;
-  windspeed = 0;
-  
+void measureWindSpeed() {
   counter = 0;  
-  attachInterrupt(0, addcount, RISING);
-  unsigned long millis();       
   long startTime = millis();
-  while(millis() < startTime + period) {
+  while (millis() < startTime + PERIOD) {
+    // Wait for the period to complete
   }
 }
 
-void RPMcalc(){
-  RPM=((counter)*60)/(period/1000); // Calculate revolutions per minute (RPM)
+void calculateRPM() {
+  rpm = (counter * 60) / (PERIOD / 1000);  // Calculate RPM
 }
 
-void WindSpeed(){
-  windspeed = ((4 * pi * radius * RPM)/60) / 1000; // Calculate wind speed on m/s
- 
+void calculateWindSpeedMetersPerSecond() {
+  windSpeedMetersPerSecond = ((4 * PI * RADIUS * rpm) / 60) / 1000;  // Calculate wind speed in m/s
 }
 
-void SpeedWind(){
-  speedwind = (((4 * pi * radius * RPM)/60) / 1000)*3.6; // Calculate wind speed on km/h
- 
+void calculateWindSpeedKilometersPerHour() {
+  windSpeedKilometersPerHour = windSpeedMetersPerSecond * 3.6;  // Convert m/s to km/h
 }
 
-void addcount(){
-  counter++;
-} 
+void countRevolution() {
+  counter++;  // Increment counter for each revolution detected
+}
 
+/***************************************************************************
+Indicador de vento DV10 
+ ***************************************************************************/
+// usar 3.3V
 
+int pin = A0;  // Declara o pino analógico 0 como "pin"
+float valor = 0;   // declara a variável inicial em 0
+int Winddir = 0;   // Declara o valor inicial em 0
 
-#define REED          2    // pin onde o sensor magnetico esta conectado
+void setup() {
+  Serial.begin(9600);         // Define o baud rate em 9600
+  analogReference(DEFAULT);
+}
 
-#define DIAMETRO 125       // diametro interno do balde
-#define RAIO     6.25      // raio interno do balde
-#define VOLUME   3.05      // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
+void loop() {
+  valor = analogRead(pin) * (3.3 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
 
-// Variáveis pluviometro:
-int val = 0;
-int old_val = 0;
-volatile unsigned long REEDCOUNT = 0;
-float volume_coletado;
+  // Apresenta os valores da tensão de saída no Monitor Serial
+  Serial.print("Leitura do sensor: ");
+  Serial.print(valor, 2);  // imprime com duas casas decimais
+  Serial.println(" volt");
 
-// This is the function that the interrupt calls to increment the turning count
-void IRAM_ATTR isr_rain () {
-  if ((millis() - ContactBounce) > 50 ) { // debounce the switch contact.
-    REEDCOUNT = REEDCOUNT + 1;              // Adiciona 1 à cntagem de pulsos
-    ContactBounce = millis();
-    // Serial.println("funcao interrupcao chuva");
+  // Determina a direção do vento baseada na tensão
+  if (valor <= 2.90) {
+    Winddir = 0;
+    Serial.println("Direção do Vento: Norte");
+  } else if (valor <= 3.05) {
+    Winddir = 315;
+    Serial.println("Direção do Vento: Noroeste");
+  } else if (valor <= 3.25) {
+    Winddir = 270;
+    Serial.println("Direção do Vento: Oeste");
+  } else if (valor <= 3.45) {
+    Winddir = 225;
+    Serial.println("Direção do Vento: Sudoeste");
+  } else if (valor <= 3.75) {
+    Winddir = 180;
+    Serial.println("Direção do Vento: Sul");
+  } else if (valor <= 4.00) {
+    Winddir = 135;
+    Serial.println("Direção do Vento: Sudeste");
+  } else if (valor <= 4.25) {
+    Winddir = 90;
+    Serial.println("Direção do Vento: Leste");
+  } else if (valor <= 4.65) {
+    Winddir = 45;
+    Serial.println("Direção do Vento: Nordeste");
+  } else {
+    Winddir = 000;
+    Serial.println("Direção do Vento: Indeterminada");
   }
+
+  // Imprime o ângulo de direção do vento
+  Serial.print("Ângulo: ");
+  Serial.print(Winddir);
+  Serial.println(" Graus");
+
+  delay(5000);  // Aguarda 5 segundos antes da próxima leitura
 }
 
-void get_rain(){
-    // float area_recipiente = 3.14159265 * (RAIO * RAIO); // área da seção transversal do recipiente em cm²
-    // float volume_por_virada = (VOLUME/area_recipiente);
-    volume_coletado = (REEDCOUNT * 0.25) * 10; // volume total coletado em cm³
-
-    Serial.print("Viradas: ");
-    Serial.println(REEDCOUNT);
-
-    Serial.print("Chuva: ");
-    Serial.print (volume_coletado);
-    Serial.println(" mm");
-}
 
 /***************************************************************************
 Pluviômetro
