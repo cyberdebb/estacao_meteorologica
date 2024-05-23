@@ -1,25 +1,27 @@
 /***************************************************************************
 BMP280
  ***************************************************************************/
-
 #include <Wire.h>
 #include <Adafruit_BMP280.h>
 
-// Define the I2C address and initialize the BMP280 object
-Adafruit_BMP280 bmp; // I2C
+Adafruit_BMP280 bmp;
 
 void setup() {
-  // Start the serial communication
   Serial.begin(115200);
-  while (!Serial) delay(100);   // Wait for native USB
+  Serial.println(F("BMP280 test"));
+  unsigned status;
+  status = bmp.begin(0x76 , &Wire);
 
-  // Initialize the BMP280 sensor
-  if (!bmp.begin()) {
+  if (!status) {
     Serial.println(F("Could not find a valid BMP280 sensor, check wiring or try a different address!"));
-    while (1) delay(10);  // Loop forever if sensor initialization fails
+    Serial.print("SensorID was: 0x"); 
+    Serial.println(bmp.sensorID(),16);
+    Serial.print("ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
+    Serial.print("ID of 0x56-0x58 represents a BMP 280,\n");
+    Serial.print("ID of 0x60 represents a BME 280.\n");
+    Serial.print("ID of 0x61 represents a BME 680.\n");
+    while (1) delay(10);
   }
-
-  // Default settings from datasheet
   bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
                   Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
                   Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
@@ -28,30 +30,25 @@ void setup() {
 }
 
 void loop() {
-  // Read temperature and pressure
-  float temp = bmp.readTemperature();
-  float pressure = bmp.readPressure();
+    Serial.print(F("Temperature = "));
+    Serial.print(bmp.readTemperature());
+    Serial.println(" *C");
 
-  // Print temperature and pressure to the serial monitor
-  Serial.print("TEMP C ");
-  Serial.print(temp);
-  Serial.print(" -- Pressure ");
-  Serial.print(pressure);
-  Serial.println(" Pa");
+    Serial.print(F("Pressure = "));
+    Serial.print(bmp.readPressure());
+    Serial.println(" Pa");
 
-  // Optional: Read and print altitude
-  Serial.print("Approx altitude = ");
-  Serial.print(bmp.readAltitude(1013.25)); /* Adjusted to local forecast! */
-  Serial.println(" m");
+    Serial.print(F("Approx altitude = "));
+    Serial.print(bmp.readAltitude(1011)); 
+    Serial.println(" m");
 
-  // Delay between readings
-  delay(2000);
+    Serial.println();
+    delay(2000);
 }
 
 /***************************************************************************
 DHT11
  ***************************************************************************/
-
 #include <DHT.h>
 
 DHT dht(15,DHT11);
@@ -82,9 +79,6 @@ void loop() {
 /***************************************************************************
 Anemometro Arduino SV10
  ***************************************************************************/
-// usar 5V
-
-// Pin definitions
 #define HALL_SENSOR_PIN 2  // ESP32 pin where the hall sensor is connected
 
 // Constants definitions
@@ -164,9 +158,8 @@ void countRevolution() {
 /***************************************************************************
 Indicador de vento DV10 
  ***************************************************************************/
-// usar 3.3V
+#define PIN 36
 
-int pin = A0;  // Declara o pino analógico 0 como "pin"
 float valor = 0;   // declara a variável inicial em 0
 int Winddir = 0;   // Declara o valor inicial em 0
 
@@ -176,7 +169,7 @@ void setup() {
 }
 
 void loop() {
-  valor = analogRead(pin) * (3.3 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
+  valor = analogRead(PIN) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
 
   // Apresenta os valores da tensão de saída no Monitor Serial
   Serial.print("Leitura do sensor: ");
@@ -221,13 +214,44 @@ void loop() {
   delay(5000);  // Aguarda 5 segundos antes da próxima leitura
 }
 
-
 /***************************************************************************
 Pluviômetro
  ***************************************************************************/
+#define REED 2    // pin onde o sensor magnetico esta conectado
+
+#define DIAMETRO 125       // diametro interno do balde
+#define RAIO 6.25      // raio interno do balde
+#define VOLUME 3.05      // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
+
+// Variáveis pluviometro:
+int val = 0;
+int old_val = 0;
+volatile unsigned long REEDCOUNT = 0;
+float volume_coletado;
+
+// This is the function that the interrupt calls to increment the turning count
+void IRAM_ATTR isr_rain () {
+  if ((millis() - ContactBounce) > 50 ) { // debounce the switch contact.
+    REEDCOUNT = REEDCOUNT + 1;              // Adiciona 1 à cntagem de pulsos
+    ContactBounce = millis();
+    // Serial.println("funcao interrupcao chuva");
+  }
+}
+
+void get_rain(){
+    // float area_recipiente = 3.14159265 * (RAIO * RAIO); // área da seção transversal do recipiente em cm²
+    // float volume_por_virada = (VOLUME/area_recipiente);
+    volume_coletado = (REEDCOUNT * 0.25) * 10; // volume total coletado em cm³
+
+    Serial.print("Viradas: ");
+    Serial.println(REEDCOUNT);
+
+    Serial.print("Chuva: ");
+    Serial.print (volume_coletado);
+    Serial.println(" mm");
+}
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(115200);       // velocidade monitor serial
 
   pinMode(REED, INPUT_PULLUP);
@@ -235,7 +259,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   get_rain();
-
+  delay(1000);
 }
