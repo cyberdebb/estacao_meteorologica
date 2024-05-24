@@ -1,8 +1,9 @@
 #include <DHT.h>
 
-#define DHT_PIN 15 // DHT11
+// definição de pins
 #define HALL_SENSOR_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
 #define REED 3    // pin onde o sensor magnetico esta conectado - Pluviômetro
+#define DHT_PIN 15 // DHT11
 #define PIN 36 // Indicador de Vento DV10
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
@@ -34,14 +35,27 @@ float windSpeedKilometersPerHour = 0;  // Wind speed in km/h
 float valor = 0;   // declara a variável inicial em 0
 int Winddir = 0;   // Declara o valor inicial em 0
 
+// instância dht11
 DHT dht(DHT_PIN, DHT11);
+
+// Funções de interrupção
+void countRevolution() {
+  counter++;  // Increment counter for each revolution detected
+}
+
+// This is the function that the interrupt calls to increment the turning count
+void IRAM_ATTR isr_rain () {
+  if ((millis() - ContactBounce) > 50 ) { // debounce the switch contact.
+    REEDCOUNT = REEDCOUNT + 1;              // Adiciona 1 à cntagem de pulsos
+    ContactBounce = millis();
+    // Serial.println("funcao interrupcao chuva");
+  }
+}
 
 void setup() {
   // Initialize the pins
   pinMode(HALL_SENSOR_PIN, INPUT_PULLUP);  // Set pin as input with internal pull-up
   pinMode(REED, INPUT_PULLUP);
-
-  analogReference(DEFAULT);
 
   dht.begin();
   delay(2000);
@@ -88,19 +102,6 @@ void calculateWindSpeedMetersPerSecond() {
 
 void calculateWindSpeedKilometersPerHour() {
   windSpeedKilometersPerHour = windSpeedMetersPerSecond * 3.6;  // Convert m/s to km/h
-}
-
-void countRevolution() {
-  counter++;  // Increment counter for each revolution detected
-}
-
-// This is the function that the interrupt calls to increment the turning count
-void IRAM_ATTR isr_rain () {
-  if ((millis() - ContactBounce) > 50 ) { // debounce the switch contact.
-    REEDCOUNT = REEDCOUNT + 1;              // Adiciona 1 à cntagem de pulsos
-    ContactBounce = millis();
-    // Serial.println("funcao interrupcao chuva");
-  }
 }
 
 void getRain(){
