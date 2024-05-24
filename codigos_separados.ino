@@ -226,8 +226,9 @@ Pluviômetro
 // Variáveis pluviometro:
 int val = 0;
 int old_val = 0;
-volatile unsigned long REEDCOUNT = 0;
 float volume_coletado;
+volatile unsigned long ContactBounce = 0;
+volatile unsigned long REEDCOUNT = 0;
 
 // This is the function that the interrupt calls to increment the turning count
 void IRAM_ATTR isr_rain () {

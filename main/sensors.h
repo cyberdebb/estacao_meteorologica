@@ -36,15 +36,23 @@ class DhtSensor {
       Serial.print(umidade);
       Serial.println(" % ");
     }
-}
+};
 
 class BmpSensor {
   private:
     Adafruit_BMP280 bmp;
 
   public:
-    void begin() {
-      bmp.begin();
+    bool begin(uint8_t address) {
+      return bmp.begin(address); 
+    }
+
+    uint8_t sensorID() {
+      return bmp.sensorID();
+    }
+    
+    void setSampling(Adafruit_BMP280::sensor_mode mode, Adafruit_BMP280::sensor_sampling tempSampling, Adafruit_BMP280::sensor_sampling pressSampling, Adafruit_BMP280::sensor_filter filter, Adafruit_BMP280::standby_duration duration) {
+      bmp.setSampling(mode, tempSampling, pressSampling, filter, duration);
     }
 
     void getBmp() {
@@ -62,23 +70,17 @@ class BmpSensor {
 
       Serial.println();
     }
-}
+};
 
 class PluviometerSensor {
   private:
     int val = 0;
     int old_val = 0;
     float volume_coletado;
-    volatile unsigned long REEDCOUNT = 0;
-
+    
   public:
-    // This is the function that the interrupt calls to increment the turning count
-    void IRAM_ATTR isr_rain() {
-      if ((millis() - ContactBounce) > 50 ) { // debounce the switch contact.
-        REEDCOUNT = REEDCOUNT + 1; // Adiciona 1 à cntagem de pulsos
-        ContactBounce = millis();
-      }
-    }
+    static volatile unsigned long ContactBounce;
+    static volatile unsigned long REEDCOUNT;
 
     void getRain(){
       // float area_recipiente = 3.14159265 * (RAIO * RAIO); // área da seção transversal do recipiente em cm²
@@ -97,16 +99,17 @@ class PluviometerSensor {
 class AnemometerSensor {
   private:
     unsigned int sampleNumber = 0;  // Sample number
-    volatile unsigned int counter = 0; // Magnet counter for sensor
     unsigned int rpm = 0;  // Revolutions per minute
     float windSpeedMetersPerSecond = 0;  // Wind speed in m/s
     float windSpeedKilometersPerHour = 0;  // Wind speed in km/h
 
   public:
+    static volatile unsigned int counter; // Magnet counter for sensor
+
     void measureWindSpeed() {
       counter = 0;  
       long startTime = millis();
-      while (millis() < startTime + PERIOD)
+      while (millis() < startTime + PERIOD) {}
       // Wait for the period to complete
     }
 
@@ -120,10 +123,6 @@ class AnemometerSensor {
 
     void calculateWindSpeedKilometersPerHour() {
       windSpeedKilometersPerHour = windSpeedMetersPerSecond * 3.6; // Convert m/s to km/h
-    }
-
-    void countRevolution() {
-      counter++; // Increment counter for each revolution detected
     }
 
     void getAnemometer() {
@@ -156,10 +155,13 @@ class WindIndicatorSensor {
   private:
     float valor = 0; // declara a variável inicial em 0
     int Winddir = 0; // Declara o valor inicial em 0
+    int pin;
 
   public:
+    WindIndicatorSensor(int win_pin) : pin(win_pin) {}
+
     void getWindDirection() {
-      valor = analogRead(PIN) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
+      valor = analogRead(pin) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
 
       // Apresenta os valores da tensão de saída no Monitor Serial
       Serial.print("Leitura do sensor: ");
@@ -203,5 +205,22 @@ class WindIndicatorSensor {
     }
 };
 
+// Defining static interruption variables
+volatile unsigned int AnemometerSensor::counter = 0;
+volatile unsigned long PluviometerSensor::ContactBounce = 0;
+volatile unsigned long PluviometerSensor::REEDCOUNT = 0;
+
+// Pluviometer Interruption function
+static void IRAM_ATTR isr_rain() { // This is the function that the interrupt calls to increment the turning count
+  if ((millis() - PluviometerSensor::ContactBounce) > 50) { // debounce the switch contact.
+    PluviometerSensor::REEDCOUNT++; // Incrementa a contagem de pulsos
+    PluviometerSensor::ContactBounce = millis();
+  }
+}
+
+// Anemometer Interruption function
+static void countRevolution() {
+  AnemometerSensor::counter++; // Increment counter for each revolution detected
+}
 
 #endif

@@ -19,6 +19,7 @@
 // Variáveis Pluviômetro
 int val = 0;
 int old_val = 0;
+volatile unsigned long ContactBounce = 0;
 volatile unsigned long REEDCOUNT = 0;
 float volume_coletado;
 
