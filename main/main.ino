@@ -2,9 +2,9 @@
 
 // Pin definitions
 #define ANE_HALL_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
-#define PLU_REED_PIN 3  // ESP32 pin where the magnetic sensor is connected - Pluviômetro
+#define PLU_REED_PIN 13  // ESP32 pin where the magnetic sensor is connected - Pluviômetro
 #define DHT_PIN 15 // DHT11
-#define WIN_PIN 36 // Indicador de Vento DV10
+#define WIN_PIN 26 // Indicador de Vento DV10
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
 
@@ -27,16 +27,9 @@ void setup() {
   delay(DELAY_TIME);
 
   // Initialize BMP280
-  if (!bmp.begin(0x76)) {
-    Serial.println(F("Could not find a valid BMP280 sensor, check wiring or try a different address!"));
-    Serial.print("SensorID was: 0x"); 
-    Serial.println(bmp.sensorID(),16);
-    Serial.print("ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
-    Serial.print("ID of 0x56-0x58 represents a BMP 280,\n");
-    Serial.print("ID of 0x60 represents a BME 280.\n");
-    Serial.print("ID of 0x61 represents a BME 680.\n");
-    while (1) delay(10);
-  }
+  bmp.begin(0x76);
+  delay(DELAY_TIME);
+  
   bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
                   Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
                   Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
@@ -49,22 +42,26 @@ void setup() {
 }
 
 void loop() {
-  // DHT11
-  dht.getDht();
+  std::string fullReport; 
 
-  //BMP280
-  bmp.getBmp();
+  // DHT11
+  fullReport += dht.getDht();
+  delay(DELAY_TIME);  
+
+  // BMP280
+  fullReport += bmp.getBmp();
+  delay(DELAY_TIME);  
 
   // Pluviômetro
-  plu.getRain();
+  fullReport += plu.getRain();
+  delay(DELAY_TIME);  
 
   // Anemômetro SV10
-  ane.getAnemometer();
+  fullReport += ane.getAnemometer();
+  delay(DELAY_TIME);  
 
   // Indicador de Vento DV10
-  win.getWindDirection();
-
-  // Delay between prints
+  fullReport += win.getWindDirection();
   delay(DELAY_TIME);  
 }
 

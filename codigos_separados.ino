@@ -165,7 +165,6 @@ int Winddir = 0;   // Declara o valor inicial em 0
 
 void setup() {
   Serial.begin(9600);         // Define o baud rate em 9600
-  analogReference(DEFAULT);
 }
 
 void loop() {
@@ -217,7 +216,7 @@ void loop() {
 /***************************************************************************
 Pluviômetro
  ***************************************************************************/
-#define REED 2    // pin onde o sensor magnetico esta conectado
+#define REED 13    // pin onde o sensor magnetico esta conectado
 
 #define DIAMETRO 125       // diametro interno do balde
 #define RAIO 6.25      // raio interno do balde

@@ -2,9 +2,9 @@
 
 // definição de pins
 #define HALL_SENSOR_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
-#define REED 3    // pin onde o sensor magnetico esta conectado - Pluviômetro
+#define REED 13    // pin onde o sensor magnetico esta conectado - Pluviômetro
 #define DHT_PIN 15 // DHT11
-#define PIN 36 // Indicador de Vento DV10
+#define PIN 26 // Indicador de Vento DV10
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
 
@@ -155,7 +155,7 @@ void getDht() {
 }
 
 void getWindDirection() {
-  valor = analogRead(PIN) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
+  valor = analogRead(PIN) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 5V
 
   // Apresenta os valores da tensão de saída no Monitor Serial
   Serial.print("Leitura do sensor: ");
@@ -163,28 +163,28 @@ void getWindDirection() {
   Serial.println(" volt");
 
   // Determina a direção do vento baseada na tensão
-  if (valor <= 2.90) {
+  if ((valor > 2.4 && valor <= 2.5) || (valor >= 0 && valor <= 0.16)) {
     Winddir = 0;
     Serial.println("Direção do Vento: Norte");
-  } else if (valor <= 3.05) {
+  } else if (valor > 0.16 && valor <= 0.48) {
     Winddir = 315;
     Serial.println("Direção do Vento: Noroeste");
-  } else if (valor <= 3.25) {
+  } else if (valor > 0.48 && valor <= 0.80) {
     Winddir = 270;
     Serial.println("Direção do Vento: Oeste");
-  } else if (valor <= 3.45) {
+  } else if (valor > 0.80 && valor <= 1.12) {
     Winddir = 225;
     Serial.println("Direção do Vento: Sudoeste");
-  } else if (valor <= 3.75) {
+  } else if (valor > 1.12 && valor <= 1.44) {
     Winddir = 180;
     Serial.println("Direção do Vento: Sul");
-  } else if (valor <= 4.00) {
+  } else if (valor > 1.44 && valor <= 1.76) {
     Winddir = 135;
     Serial.println("Direção do Vento: Sudeste");
-  } else if (valor <= 4.25) {
+  } else if (valor > 1.76 && valor <= 2.1) {
     Winddir = 90;
     Serial.println("Direção do Vento: Leste");
-  } else if (valor <= 4.65) {
+  } else if (valor > 2.1 && valor <= 2.4) {
     Winddir = 45;
     Serial.println("Direção do Vento: Nordeste");
   } else {

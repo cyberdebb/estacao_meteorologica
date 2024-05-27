@@ -1,6 +1,9 @@
 #ifndef SENSORS_H
 #define SENSORS_H
 
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <DHT.h>
 #include <Wire.h>
 #include <Adafruit_BMP280.h>
@@ -17,6 +20,8 @@
 class DhtSensor {
   private:
     DHT dht;
+    float temp = 0;
+    float umidade = 0;
 
   public: 
     DhtSensor(uint8_t pin, uint8_t type) : dht(pin, type) {}
@@ -25,22 +30,23 @@ class DhtSensor {
       dht.begin();
     }
 
-    void getDht() {
-      float temp = dht.readTemperature();
-      float umidade = dht.readHumidity();
+    std::string getDht() {
+      temp = dht.readTemperature();
+      umidade = dht.readHumidity();
 
-      Serial.print("TEMP C ");
-      Serial.print(temp);
+      std::string data = "TEMP C " + std::to_string(temp) + " -- Umidade " + std::to_string(umidade) + " % ";
 
-      Serial.print(" -- Umidade ");
-      Serial.print(umidade);
-      Serial.println(" % ");
+      Serial.println(data.c_str());  // Usando c_str() para converter std::string para const char* que é necessário para Serial.println
+      return data;
     }
 };
 
 class BmpSensor {
   private:
     Adafruit_BMP280 bmp;
+    float temperature = 0;
+    float pressure = 0;
+    float altitude = 0;
 
   public:
     bool begin(uint8_t address) {
@@ -55,20 +61,17 @@ class BmpSensor {
       bmp.setSampling(mode, tempSampling, pressSampling, filter, duration);
     }
 
-    void getBmp() {
-      Serial.print(F("Temperature = "));
-      Serial.print(bmp.readTemperature());
-      Serial.println(" *C");
+    std::string getBmp() {
+      temperature = bmp.readTemperature();
+      pressure = bmp.readPressure();
+      altitude = bmp.readAltitude(1011);
 
-      Serial.print(F("Pressure = "));
-      Serial.print(bmp.readPressure());
-      Serial.println(" Pa");
+      std::string data = "Temperature = " + std::to_string(temperature) + " *C\n" +
+                     "Pressure = " + std::to_string(pressure) + " Pa\n" +
+                     "Approx altitude = " + std::to_string(altitude) + " m\n";
 
-      Serial.print(F("Approx altitude = "));
-      Serial.print(bmp.readAltitude(1011)); 
-      Serial.println(" m");
-
-      Serial.println();
+      Serial.println(data.c_str()); 
+      return data;
     }
 };
 
@@ -76,29 +79,27 @@ class PluviometerSensor {
   private:
     int val = 0;
     int old_val = 0;
-    float volume_coletado;
+    float volume_coletado = 0;
     
   public:
     static volatile unsigned long ContactBounce;
     static volatile unsigned long REEDCOUNT;
 
-    void getRain(){
+    std::string getRain(){
       // float area_recipiente = 3.14159265 * (RAIO * RAIO); // área da seção transversal do recipiente em cm²
       // float volume_por_virada = (VOLUME/area_recipiente);
       volume_coletado = (REEDCOUNT * 0.25) * 10; // volume total coletado em cm³
 
-      Serial.print("Viradas: ");
-      Serial.println(REEDCOUNT);
+      std::string data = "Viradas: " + std::to_string(REEDCOUNT) + "\n" +
+                     "Chuva: " + std::to_string(volume_coletado) + " mm\n";
 
-      Serial.print("Chuva: ");
-      Serial.print (volume_coletado);
-      Serial.println(" mm");
+      Serial.println(data.c_str());  // Imprime a string composta de uma só vez
+      return data;
     }
 };
 
 class AnemometerSensor {
   private:
-    unsigned int sampleNumber = 0;  // Sample number
     unsigned int rpm = 0;  // Revolutions per minute
     float windSpeedMetersPerSecond = 0;  // Wind speed in m/s
     float windSpeedKilometersPerHour = 0;  // Wind speed in km/h
@@ -109,8 +110,7 @@ class AnemometerSensor {
     void measureWindSpeed() {
       counter = 0;  
       long startTime = millis();
-      while (millis() < startTime + PERIOD) {}
-      // Wait for the period to complete
+      while (millis() < startTime + PERIOD) {}; // Wait for the period to complete
     }
 
     void calculateRPM() {
@@ -125,83 +125,72 @@ class AnemometerSensor {
       windSpeedKilometersPerHour = windSpeedMetersPerSecond * 3.6; // Convert m/s to km/h
     }
 
-    void getAnemometer() {
-      sampleNumber++;
-      Serial.print(sampleNumber);
-      Serial.print(": Start measurement...");
+    std::string getAnemometer() {
       measureWindSpeed();
-      Serial.println(" finished.");
-      Serial.print("Counter: ");
-      Serial.print(counter);
-      Serial.print("; RPM: ");
       calculateRPM();
-      Serial.print(rpm);
-      Serial.print("; Wind speed: ");
-      
-      // Print wind speed in m/s
       calculateWindSpeedMetersPerSecond();
-      Serial.print(windSpeedMetersPerSecond);
-      Serial.print(" [m/s] ");              
-      
-      // Print wind speed in km/h
       calculateWindSpeedKilometersPerHour();
-      Serial.print(windSpeedKilometersPerHour);
-      Serial.print(" [km/h] ");  
-      Serial.println();
+
+      std::string data = "Counter: " + std::to_string(counter) + 
+                         "; RPM: " + std::to_string(rpm) + 
+                         "; Wind speed: " + std::to_string(windSpeedMetersPerSecond) + 
+                         " [m/s] " + std::to_string(windSpeedKilometersPerHour) + " [km/h]\n";
+
+      Serial.println(data.c_str());  
+      return data;
     }
 };
 
 class WindIndicatorSensor {
   private:
-    float valor = 0; // declara a variável inicial em 0
     int Winddir = 0; // Declara o valor inicial em 0
+    float valor = 0; // declara a variável inicial em 0
     int pin;
 
   public:
     WindIndicatorSensor(int win_pin) : pin(win_pin) {}
 
-    void getWindDirection() {
-      valor = analogRead(pin) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 3.3V
+    std::string getWindDirection() {
+      valor = analogRead(pin) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 5V
 
-      // Apresenta os valores da tensão de saída no Monitor Serial
-      Serial.print("Leitura do sensor: ");
-      Serial.print(valor, 2); // imprime com duas casas decimais
-      Serial.println(" volt");
+      std::string windDirection;
 
       // Determina a direção do vento baseada na tensão
-      if (valor <= 2.90) {
+      if ((valor > 2.4 && valor <= 2.5) || (valor >= 0 && valor <= 0.16)) {
         Winddir = 0;
-        Serial.println("Direção do Vento: Norte");
-      } else if (valor <= 3.05) {
+        windDirection = "Norte";
+      } else if (valor > 0.16 && valor <= 0.48) {
         Winddir = 315;
-        Serial.println("Direção do Vento: Noroeste");
-      } else if (valor <= 3.25) {
+        windDirection = "Noroeste";
+      } else if (valor > 0.48 && valor <= 0.80) {
         Winddir = 270;
-        Serial.println("Direção do Vento: Oeste");
-      } else if (valor <= 3.45) {
+        windDirection = "Oeste";
+      } else if (valor > 0.80 && valor <= 1.12) {
         Winddir = 225;
-        Serial.println("Direção do Vento: Sudoeste");
-      } else if (valor <= 3.75) {
+        windDirection = "Sudoeste";
+      } else if (valor > 1.12 && valor <= 1.44) {
         Winddir = 180;
-        Serial.println("Direção do Vento: Sul");
-      } else if (valor <= 4.00) {
+        windDirection = "Sul";
+      } else if (valor > 1.44 && valor <= 1.76) {
         Winddir = 135;
-        Serial.println("Direção do Vento: Sudeste");
-      } else if (valor <= 4.25) {
+        windDirection = "Sudeste";
+      } else if (valor > 1.76 && valor <= 2.1) {
         Winddir = 90;
-        Serial.println("Direção do Vento: Leste");
-      } else if (valor <= 4.65) {
+        windDirection = "Leste";
+      } else if (valor > 2.1 && valor <= 2.4) {
         Winddir = 45;
-        Serial.println("Direção do Vento: Nordeste");
+        windDirection = "Nordeste";
       } else {
-        Winddir = 000;
-        Serial.println("Direção do Vento: Indeterminada");
+        Winddir = 000;  // Default to 0 if direction is indeterminate
+        windDirection = "Indeterminada";
       }
 
-      // Imprime o ângulo de direção do vento
-      Serial.print("Ângulo: ");
-      Serial.print(Winddir);
-      Serial.println(" Graus");
+      char buffer[50];
+      snprintf(buffer, sizeof(buffer), "%.2f volt", valor);
+      std::string data = "Leitura do sensor: " + std::string(buffer) + "\nDireção do Vento: " + windDirection + "\nÂngulo: " + std::to_string(Winddir) + " Graus";
+
+      Serial.println(data.c_str()); 
+      return data;
     }
 };
 
