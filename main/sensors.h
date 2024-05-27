@@ -36,7 +36,6 @@ class DhtSensor {
 
       std::string data = "TEMP C " + std::to_string(temp) + " -- Umidade " + std::to_string(umidade) + " % ";
 
-      Serial.println(data.c_str());  // Usando c_str() para converter std::string para const char* que é necessário para Serial.println
       return data;
     }
 };
@@ -70,7 +69,6 @@ class BmpSensor {
                      "Pressure = " + std::to_string(pressure) + " Pa\n" +
                      "Approx altitude = " + std::to_string(altitude) + " m\n";
 
-      Serial.println(data.c_str()); 
       return data;
     }
 };
@@ -93,7 +91,6 @@ class PluviometerSensor {
       std::string data = "Viradas: " + std::to_string(REEDCOUNT) + "\n" +
                      "Chuva: " + std::to_string(volume_coletado) + " mm\n";
 
-      Serial.println(data.c_str());  // Imprime a string composta de uma só vez
       return data;
     }
 };
@@ -136,7 +133,6 @@ class AnemometerSensor {
                          "; Wind speed: " + std::to_string(windSpeedMetersPerSecond) + 
                          " [m/s] " + std::to_string(windSpeedKilometersPerHour) + " [km/h]\n";
 
-      Serial.println(data.c_str());  
       return data;
     }
 };
@@ -189,7 +185,6 @@ class WindIndicatorSensor {
       snprintf(buffer, sizeof(buffer), "%.2f volt", valor);
       std::string data = "Leitura do sensor: " + std::string(buffer) + "\nDireção do Vento: " + windDirection + "\nÂngulo: " + std::to_string(Winddir) + " Graus";
 
-      Serial.println(data.c_str()); 
       return data;
     }
 };

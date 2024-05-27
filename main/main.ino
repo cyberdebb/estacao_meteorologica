@@ -63,5 +63,7 @@ void loop() {
   // Indicador de Vento DV10
   fullReport += win.getWindDirection();
   delay(DELAY_TIME);  
+
+  Serial.println(fullReport.c_str());
 }
 
