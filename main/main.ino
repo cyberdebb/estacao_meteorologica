@@ -8,6 +8,7 @@
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
 
+// Instantiate all sensor classes
 DhtSensor dht(DHT_PIN, DHT11);
 BmpSensor bmp;
 PluviometerSensor plu;
@@ -45,25 +46,26 @@ void loop() {
   std::string fullReport; 
 
   // DHT11
-  fullReport += dht.getDht();
+  fullReport += formatOutput(dht.getDht());
   delay(DELAY_TIME);  
 
   // BMP280
-  fullReport += bmp.getBmp();
+  fullReport += formatOutput(bmp.getBmp());
   delay(DELAY_TIME);  
 
   // Pluviômetro
-  fullReport += plu.getRain();
+  fullReport += formatOutput(plu.getRain());
   delay(DELAY_TIME);  
 
   // Anemômetro SV10
-  fullReport += ane.getAnemometer();
+  fullReport += formatOutput(ane.getAnemometer());
   delay(DELAY_TIME);  
 
   // Indicador de Vento DV10
-  fullReport += win.getWindDirection();
+  fullReport += formatOutput(win.getWindDirection());
   delay(DELAY_TIME);  
 
+  // Print full report on serial monitor
   Serial.println(fullReport.c_str());
 }
 

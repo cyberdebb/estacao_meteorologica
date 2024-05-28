@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include <sstream>
+#include <iomanip>
 #include <DHT.h>
-#include <Wire.h>
 #include <Adafruit_BMP280.h>
+#include <Wire.h>
 
 // Pluviometer constants
 #define DIAMETRO 125 // diametro interno do balde
@@ -34,9 +34,11 @@ class DhtSensor {
       temp = dht.readTemperature();
       umidade = dht.readHumidity();
 
-      std::string data = "TEMP C " + std::to_string(temp) + " -- Umidade " + std::to_string(umidade) + " % ";
+      std::stringstream data;
+      data << std::fixed << std::setprecision(2);
+      data << "TEMP C " << temp << " -- Umidade " << umidade << "%";
 
-      return data;
+      return data.str();
     }
 };
 
@@ -65,11 +67,13 @@ class BmpSensor {
       pressure = bmp.readPressure();
       altitude = bmp.readAltitude(1011);
 
-      std::string data = "Temperature = " + std::to_string(temperature) + " *C\n" +
-                     "Pressure = " + std::to_string(pressure) + " Pa\n" +
-                     "Approx altitude = " + std::to_string(altitude) + " m\n";
+      std::stringstream data;
+      data << std::fixed << std::setprecision(2);
+      data << "Temperature = " << temperature << " *C\n"
+           << "Pressure = " << pressure << " Pa\n"
+           << "Approx altitude = " << altitude << " m\n";
 
-      return data;
+      return data.str();
     }
 };
 
@@ -88,10 +92,11 @@ class PluviometerSensor {
       // float volume_por_virada = (VOLUME/area_recipiente);
       volume_coletado = (REEDCOUNT * 0.25) * 10; // volume total coletado em cm³
 
-      std::string data = "Viradas: " + std::to_string(REEDCOUNT) + "\n" +
-                     "Chuva: " + std::to_string(volume_coletado) + " mm\n";
+      std::stringstream data;
+      data << "Viradas: " << REEDCOUNT << "\n"
+           << "Chuva: " << volume_coletado << " mm\n";
 
-      return data;
+      return data.str();
     }
 };
 
@@ -128,12 +133,14 @@ class AnemometerSensor {
       calculateWindSpeedMetersPerSecond();
       calculateWindSpeedKilometersPerHour();
 
-      std::string data = "Counter: " + std::to_string(counter) + 
-                         "; RPM: " + std::to_string(rpm) + 
-                         "; Wind speed: " + std::to_string(windSpeedMetersPerSecond) + 
-                         " [m/s] " + std::to_string(windSpeedKilometersPerHour) + " [km/h]\n";
+      std::stringstream data;
+      data << std::fixed << std::setprecision(2);
+      data << "Counter: " << counter <<
+              "; RPM: " << rpm <<
+              "; Wind speed: " << windSpeedMetersPerSecond << " [m/s] " <<
+              windSpeedKilometersPerHour << " [km/h]\n";
 
-      return data;
+      return data.str();
     }
 };
 
@@ -181,11 +188,13 @@ class WindIndicatorSensor {
         windDirection = "Indeterminada";
       }
 
-      char buffer[50];
-      snprintf(buffer, sizeof(buffer), "%.2f volt", valor);
-      std::string data = "Leitura do sensor: " + std::string(buffer) + "\nDireção do Vento: " + windDirection + "\nÂngulo: " + std::to_string(Winddir) + " Graus";
+      std::stringstream data;
+      data << std::fixed << std::setprecision(2);
+      data << "Leitura do sensor: " << valor << " volt\n"
+           << "Direção do Vento: " << windDirection << "\n"
+           << "Ângulo: " << Winddir << " Graus";
 
-      return data;
+      return data.str();
     }
 };
 
@@ -205,6 +214,11 @@ static void IRAM_ATTR isr_rain() { // This is the function that the interrupt ca
 // Anemometer Interruption function
 static void countRevolution() {
   AnemometerSensor::counter++; // Increment counter for each revolution detected
+}
+
+// Formating sensor outputs
+std::string formatOutput(const std::string& sensorData) {
+    return "\n\n" + sensorData;
 }
 
 #endif
