@@ -77,13 +77,13 @@ void loop() {
   getDht();
   delay(DELAY_TIME);  // Delay between prints
 
-  // // Pluviômetro
-  // getRain();
-  // delay(DELAY_TIME);  // Delay between prints
+  // Pluviômetro
+  getRain();
+  delay(DELAY_TIME);  // Delay between prints
 
-  // // Indicador de Vento DV10
-  // getWindDirection();
-  // delay(DELAY_TIME);  // Delay between prints
+  // Indicador de Vento DV10
+  getWindDirection();
+  delay(DELAY_TIME);  // Delay between prints
 }
 
 void measureWindSpeed() {
