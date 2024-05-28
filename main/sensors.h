@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <sstream>
 #include <DHT.h>
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
