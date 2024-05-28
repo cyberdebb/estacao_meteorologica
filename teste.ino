@@ -71,17 +71,19 @@ void setup() {
 void loop() {
   // Anemômetro SV10
   getAnemometer();
+  delay(DELAY_TIME);  // Delay between prints
 
   // DHT11
   getDht();
-
-  // Pluviômetro
-  getRain();
-
-  // Indicador de Vento DV10
-  getWindDirection();
-
   delay(DELAY_TIME);  // Delay between prints
+
+  // // Pluviômetro
+  // getRain();
+  // delay(DELAY_TIME);  // Delay between prints
+
+  // // Indicador de Vento DV10
+  // getWindDirection();
+  // delay(DELAY_TIME);  // Delay between prints
 }
 
 void measureWindSpeed() {
