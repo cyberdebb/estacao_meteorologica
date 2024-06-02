@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from datetime import datetime
-import re
+import requests
 import json
 
 nome_arquivo = 'dados_sensor.csv'
@@ -37,7 +37,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")  # Define o cabeçalho para JSON
             self.end_headers()
             self.wfile.write(b"Data received")
-            self.salvar_dados(dados)
+            dados_atualizados = self.salvar_dados(dados)
+            
+            status_code, response_text = enviar_dados(dados_atualizados, "https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht")
+            print(f"Enviado para endpoint remoto: {status_code}, {response_text}")
+            
             
         except json.JSONDecodeError:
             print("Erro: Dados recebidos não são um JSON valido.")
@@ -56,14 +60,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         # Extrai dados do JSON
         temp = dados.get('temperatura', 'N/A')
         umidade = dados.get('umidade', 'N/A')
-        
-            
-        
-        linha_completa = f"{horario}, {temp}, {umidade}"
-        #print(linha_completa)
-        
         dados['data'] = horario
-        
+            
+   
+   
+        linha_completa = f"{horario}, {temp}, {umidade}"
         # Abre o arquivo CSV no modo de append ('a') para adicionar dados
         with open(nome_arquivo, 'a') as f:
             f.write(linha_completa + '\n')
@@ -74,8 +75,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         
         with open(arquivo_json, 'a') as fj:
                 fj.write(linha_json + '\n')
+                
+        return dados
         
-            
+def enviar_dados(dados, url):
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(url, data=json.dumps(dados), headers=headers)
+    return response.status_code, response.text
+           
 
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8080):
     server_address = ('', port)

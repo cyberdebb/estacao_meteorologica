@@ -31,6 +31,7 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin("http://192.168.0.106:8080");  // Substitua pelo IP do seu computador
+    //http.begin("https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht");
     http.addHeader("Content-Type", "application/json");
 
     float temp = dht.readTemperature();
@@ -60,5 +61,5 @@ void loop() {
 
     http.end();
   }
-  delay(5000); // Envia a cada 10 segundos
+  delay(10000); // Envia a cada 5 segundos
 }
