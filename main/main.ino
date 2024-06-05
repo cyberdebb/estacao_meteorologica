@@ -1,4 +1,8 @@
-#include "sensors.h"
+#include "sensors/dht11.h"
+#include "sensors/bmp.h"
+#include "sensors/pluviometer.h"
+#include "sensors/anemometer.h"
+#include "sensors/windIndicator.h"
 
 // Pin definitions
 #define ANE_HALL_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
@@ -43,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  std::string fullReport; 
+  String fullReport = "\n--------------"; 
 
   // DHT11
   fullReport += formatOutput(dht.getDht());
@@ -54,7 +58,7 @@ void loop() {
   delay(DELAY_TIME);  
 
   // Pluviômetro
-  fullReport += formatOutput(plu.getRain());
+  fullReport += formatOutput(plu.getPluviometer());
   delay(DELAY_TIME);  
 
   // Anemômetro SV10
@@ -63,9 +67,16 @@ void loop() {
 
   // Indicador de Vento DV10
   fullReport += formatOutput(win.getWindDirection());
-  delay(DELAY_TIME);  
+  delay(DELAY_TIME); 
+
+  fullReport += "\n--------------";
 
   // Print full report on serial monitor
   Serial.println(fullReport.c_str());
+}
+
+// Formating sensor outputs
+String formatOutput(const String& sensorData) {
+  return "\n\n" + sensorData;
 }
 
