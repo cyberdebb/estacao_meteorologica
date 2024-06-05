@@ -4,12 +4,10 @@
 #define PERIOD 5000 // Measurement period in milliseconds
 #define RADIUS 147 // Anemometer radius in mm
 
-#include <iostream>
-#include <Arduino.h>
-#include <ArduinoJson.h>
+#include "sensor.h"
 
 // Anemometer SV10 Arduino sensor class
-class AnemometerSensor {
+class AnemometerSensor : public Sensor {
   private:
     unsigned int rpm = 0;  // Revolutions per minute
     float windSpeedMetersPerSecond = 0;  // Wind speed in m/s
@@ -24,8 +22,8 @@ class AnemometerSensor {
     void calculateWindSpeedMetersPerSecond();
     void calculateWindSpeedKilometersPerHour();
     void getData();
-    String getJsonData();
-    String getAnemometer();
+    String getJsonData() override;
+    String getSensorData() override;
     ~AnemometerSensor();
 };
 
@@ -70,7 +68,7 @@ String AnemometerSensor::getJsonData() {
   return jsonData;
 }
 
-String AnemometerSensor::getAnemometer() {
+String AnemometerSensor::getSensorData() {
   getData();
 
   char buffer[200];

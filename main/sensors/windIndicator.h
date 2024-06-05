@@ -1,12 +1,10 @@
 #ifndef WINDINDICATOR_H
 #define WINDINDICATOR_H
 
-#include <iostream>
-#include <Arduino.h>
-#include <ArduinoJson.h>
+#include "sensor.h"
 
 // Wind Indicator DV10 Arduino sensor class
-class WindIndicatorSensor {
+class WindIndicatorSensor : public Sensor {
   private:
     int pin;
     int Winddir = 0; // Declara o valor inicial em 0
@@ -16,8 +14,8 @@ class WindIndicatorSensor {
   public:
     WindIndicatorSensor(int win_pin);
     void getData();
-    String getJsonData();
-    String getWindDirection();
+    String getJsonData() override;
+    String getSensorData() override;
     ~WindIndicatorSensor();
 };
 
@@ -70,7 +68,7 @@ String WindIndicatorSensor::getJsonData() {
   return jsonData;
 }
 
-String WindIndicatorSensor::getWindDirection() {
+String WindIndicatorSensor::getSensorData() {
   getData();
 
   char buffer[200];

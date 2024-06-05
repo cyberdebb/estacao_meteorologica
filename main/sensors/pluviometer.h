@@ -5,12 +5,10 @@
 #define RAIO 6.25 // raio interno do balde
 #define VOLUME 3.05 // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
 
-#include <iostream>
-#include <Arduino.h>
-#include <ArduinoJson.h>
+#include "sensor.h"
 
 // Pluviometer sensor class
-class PluviometerSensor {
+class PluviometerSensor : public Sensor {
   private:
     int val = 0;
     int old_val = 0;
@@ -22,8 +20,8 @@ class PluviometerSensor {
 
     PluviometerSensor();
     void getData();
-    String getJsonData();
-    String getPluviometer();
+    String getJsonData() override;
+    String getSensorData() override;
     ~PluviometerSensor();
 };
 
@@ -47,7 +45,7 @@ String PluviometerSensor::getJsonData() {
   return jsonData;
 }
 
-String PluviometerSensor::getPluviometer() {
+String PluviometerSensor::getSensorData() {
   getData();
 
   char buffer[100];

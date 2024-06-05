@@ -47,36 +47,30 @@ void setup() {
 }
 
 void loop() {
-  String fullReport = "\n--------------"; 
+  String fullReport = "\n--------------\n"; 
 
-  // DHT11
-  fullReport += formatOutput(dht.getDht());
+  fullReport += formatSensorOutput("DHT11", dht);
   delay(DELAY_TIME);  
 
-  // BMP280
-  fullReport += formatOutput(bmp.getBmp());
+  fullReport += formatSensorOutput("BMP280", bmp);
   delay(DELAY_TIME);  
 
-  // Pluviômetro
-  fullReport += formatOutput(plu.getPluviometer());
+  fullReport += formatSensorOutput("Pluviômetro", plu);
   delay(DELAY_TIME);  
 
-  // Anemômetro SV10
-  fullReport += formatOutput(ane.getAnemometer());
+  fullReport += formatSensorOutput("Anemômetro SV10", ane);
   delay(DELAY_TIME);  
 
-  // Indicador de Vento DV10
-  fullReport += formatOutput(win.getWindDirection());
+  fullReport += formatSensorOutput("Indicador de Vento DV10", win);
   delay(DELAY_TIME); 
 
-  fullReport += "\n--------------";
+  fullReport += "--------------\n";
 
   // Print full report on serial monitor
-  Serial.println(fullReport.c_str());
+  Serial.println(fullReport);
 }
 
-// Formating sensor outputs
-String formatOutput(const String& sensorData) {
-  return "\n\n" + sensorData;
+String formatSensorOutput(const String& name, Sensor& sensor) {
+  return "\n\n" + name + ":"+ "\n" + sensor.getSensorData();
 }
 

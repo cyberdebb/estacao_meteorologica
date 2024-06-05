@@ -1,13 +1,11 @@
 #ifndef DHT11_H
 #define DHT11_H
 
-#include <iostream>
+#include "sensor.h"
 #include <DHT.h>
-#include <Arduino.h>
-#include <ArduinoJson.h>
 
 // DHT11 sensor class
-class DhtSensor {
+class DhtSensor : public Sensor {
   private:
     DHT dht;
     float temperature = 0;
@@ -17,8 +15,8 @@ class DhtSensor {
     DhtSensor(uint8_t pin, uint8_t type);
     void begin();
     void getData();
-    String getJsonData();
-    String getDht();
+    String getJsonData() override;
+    String getSensorData() override;
     ~DhtSensor();
 };
 
@@ -46,7 +44,7 @@ String DhtSensor::getJsonData() {
   return jsonData;
 }
 
-String DhtSensor::getDht() {
+String DhtSensor::getSensorData() {
   getData();
 
   char buffer[80];

@@ -1,14 +1,12 @@
 #ifndef BMP_H
 #define BMP_H
 
-#include <iostream>
-#include <Arduino.h>
-#include <ArduinoJson.h>
+#include "sensor.h"
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
 
 // BMP280 sensor class
-class BmpSensor {
+class BmpSensor : public Sensor {
   private:
     Adafruit_BMP280 bmp;
     float temperature = 0;
@@ -21,8 +19,8 @@ class BmpSensor {
     uint8_t sensorID();
     void setSampling(Adafruit_BMP280::sensor_mode mode, Adafruit_BMP280::sensor_sampling tempSampling, Adafruit_BMP280::sensor_sampling pressSampling, Adafruit_BMP280::sensor_filter filter, Adafruit_BMP280::standby_duration duration);
     void getData();
-    String getJsonData();
-    String getBmp();
+    String getJsonData() override;
+    String getSensorData() override;
     ~BmpSensor();
 };
 
@@ -59,7 +57,7 @@ String BmpSensor::getJsonData() {
   return jsonData;
 }
 
-String BmpSensor::getBmp() {
+String BmpSensor::getSensorData() {
   getData();
 
   char buffer[150];
