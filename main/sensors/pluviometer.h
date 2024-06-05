@@ -5,7 +5,7 @@
 #define RAIO 6.25 // raio interno do balde
 #define VOLUME 3.05 // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
 
-#include "sensor.h"
+#include "../sensor.h"
 
 // Pluviometer sensor class
 class PluviometerSensor : public Sensor {

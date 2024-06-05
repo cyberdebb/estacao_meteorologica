@@ -4,7 +4,7 @@
 #define PERIOD 5000 // Measurement period in milliseconds
 #define RADIUS 147 // Anemometer radius in mm
 
-#include "sensor.h"
+#include "../sensor.h"
 
 // Anemometer SV10 Arduino sensor class
 class AnemometerSensor : public Sensor {

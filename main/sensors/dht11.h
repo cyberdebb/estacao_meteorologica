@@ -1,7 +1,7 @@
 #ifndef DHT11_H
 #define DHT11_H
 
-#include "sensor.h"
+#include "../sensor.h"
 #include <DHT.h>
 
 // DHT11 sensor class

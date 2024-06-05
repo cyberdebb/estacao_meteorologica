@@ -1,7 +1,7 @@
 #ifndef BMP_H
 #define BMP_H
 
-#include "sensor.h"
+#include "../sensor.h"
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
 

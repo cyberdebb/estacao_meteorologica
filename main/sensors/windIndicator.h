@@ -1,7 +1,7 @@
 #ifndef WINDINDICATOR_H
 #define WINDINDICATOR_H
 
-#include "sensor.h"
+#include "../sensor.h"
 
 // Wind Indicator DV10 Arduino sensor class
 class WindIndicatorSensor : public Sensor {
