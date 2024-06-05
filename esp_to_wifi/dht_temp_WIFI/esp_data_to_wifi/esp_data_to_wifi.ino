@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <DHT.h>
+#include <ArduinoJson.h> // Inclua a biblioteca ArduinoJson
 
 const char* ssid = "Starlink"; // "SUA_REDE_WIFI"
 const char* password = "diversao"; // "SUA_SENHA"
@@ -30,16 +31,24 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin("http://192.168.0.106:8080");  // Substitua pelo IP do seu computador
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    //http.begin("https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht");
+    http.addHeader("Content-Type", "application/json");
 
     float temp = dht.readTemperature();
     float umidade = dht.readHumidity();
 
-    String data = "Este é o dado que quero enviar";
+    //String data = "Este é o dado que quero enviar";
+    //data = "TEMP C " + String(temp) + " -- Umidade " + String(umidade) + " %" ;
 
-    data = "TEMP C " + String(temp) + " -- Umidade " + String(umidade) + " %" ;
+     // Cria o objeto JSON
+    DynamicJsonDocument doc(1024); // Ajuste o tamanho conforme necessário
+    doc["temperatura"] = temp;
+    doc["umidade"] = umidade;
+
+    String jsonData;
+    serializeJson(doc, jsonData);
     
-    int httpResponseCode = http.POST(data);
+    int httpResponseCode = http.POST(jsonData);
 
     if (httpResponseCode > 0) {
       String response = http.getString();
@@ -52,5 +61,5 @@ void loop() {
 
     http.end();
   }
-  delay(10000); // Envia a cada 10 segundos
+  delay(10000); // Envia a cada 5 segundos
 }

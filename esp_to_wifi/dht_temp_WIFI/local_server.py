@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from datetime import datetime
-import re
+import requests
 import json
 
 nome_arquivo = 'dados_sensor.csv'
@@ -13,7 +13,7 @@ Windows
 Prompt de Comando (CMD)
 Abra o Prompt de Comando: Pressione Win + R, digite cmd e pressione Enter.
 Digite o comando ipconfig e pressione Enter.
-Procure pelo adaptador de rede que está conectado à sua rede (geralmente WiFi ou Ethernet) e encontre o campo "Endereço IPv4". O valor mostrado é o IP do seu PC
+Procure pelo adaptador de rede que esta conectado à sua rede (geralmente WiFi ou Ethernet) e encontre o campo "Endereço IPv4". O valor mostrado é o IP do seu PC
 
 """
 
@@ -29,50 +29,60 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length).decode('utf-8')  # Decodifica os dados aqui
         print("Received data:", post_data)
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"Data received")
         
-        self.salvar_dados(post_data)
+        try:
+            dados = json.loads(post_data)  # Tenta analisar a string como JSON
+            print("Dados recebidos:", dados)
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")  # Define o cabeçalho para JSON
+            self.end_headers()
+            self.wfile.write(b"Data received")
+            dados_atualizados = self.salvar_dados(dados)
+            
+            status_code, response_text = enviar_dados(dados_atualizados, "https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht")
+            print(f"Enviado para endpoint remoto: {status_code}, {response_text}")
+            
+            
+        except json.JSONDecodeError:
+            print("Erro: Dados recebidos não são um JSON valido.")
+            self.send_response(400)  # Bad Request
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b'Erro: Envie dados JSON validos.')
+            return
+        
                 
     def salvar_dados(self, dados):
-        
-        line = dados
-
-        print(f"Received data: {line}")
-        
         now = datetime.now()
         horario = now.strftime("%H:%M:%S %d/%m/%Y")
         
-        # Utiliza expressão regular para extrair temperatura e umidade da linha
-        match = re.search(r"TEMP C (\d+\.\d+) -- Umidade (\d+\.\d+) %", line)
         
-        if match:
-            temp = match.group(1)
-            umidade = match.group(2)
-            #print(f"Temperatura: {temp}°C, Umidade: {umidade}%")
+        # Extrai dados do JSON
+        temp = dados.get('temperatura', 'N/A')
+        umidade = dados.get('umidade', 'N/A')
+        dados['data'] = horario
             
-        
+   
+   
         linha_completa = f"{horario}, {temp}, {umidade}"
-        #print(linha_completa)
-        
-        
         # Abre o arquivo CSV no modo de append ('a') para adicionar dados
         with open(nome_arquivo, 'a') as f:
             f.write(linha_completa + '\n')
-            
-        dados = {
-                'tempo': horario,
-                'temperatura': temp,
-                'umidade': umidade
-            }
+        
+           
         linha_json = json.dumps(dados)
         #print(linha_json)
         
         with open(arquivo_json, 'a') as fj:
                 fj.write(linha_json + '\n')
+                
+        return dados
         
-            
+def enviar_dados(dados, url):
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(url, data=json.dumps(dados), headers=headers)
+    return response.status_code, response.text
+           
 
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8080):
     server_address = ('', port)
