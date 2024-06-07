@@ -10,7 +10,10 @@ def enviar_dados(dados, url):
     #return response.status_code, response.text
 
  
-post_data = '{"data": "19:48:46 01/06/2024", "temperatura": 18.6, "umidade": 87 }'
+#post_data = '{"data": "19:48:46 01/06/2024", "temperatura": 18.6, "umidade": 87 }'
+
+post_data =   '{"data": "19:48:46 01/06/2024", "temperatura": "18.60", "umidade": "87.00"}'
+
 
 dados = json.loads(post_data)  # Tenta analisar a string como JSON
 
@@ -18,4 +21,9 @@ dados = json.loads(post_data)  # Tenta analisar a string como JSON
 url = "https://estacao-meteorologica.vercel.app/dht"
 
 enviar_dados(dados, url)      
-            
+print(type(dados))
+
+# hivern
+# mqtt-client.empx
+# text.mosquito
+
