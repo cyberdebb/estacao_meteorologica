@@ -2,11 +2,30 @@
 #include <HTTPClient.h>
 #include <DHT.h>
 #include <ArduinoJson.h> // Inclua a biblioteca ArduinoJson
+#include <time.h>
 
 const char* ssid = "Starlink"; // "SUA_REDE_WIFI"
 const char* password = "diversao"; // "SUA_SENHA"
 
 DHT dht(26,DHT11);
+
+
+void read_dht_temp(char* temp_str) {
+    float temp = dht.readTemperature();
+    dtostrf(temp, 4, 2, temp_str);
+}
+
+void read_dht_humidity(char* humidity_str) {
+    float humidity = dht.readHumidity();
+    dtostrf(humidity, 4, 2, humidity_str);
+}
+
+void get_current_datetime(char* buffer, size_t buffer_size) {
+    time_t now = time(NULL);
+    struct tm* tm_info = localtime(&now);
+    strftime(buffer, buffer_size, "%H:%M:%S %d/%m/%Y", tm_info);
+}
+
 
 void setup() {
 
@@ -30,25 +49,28 @@ void setup() {
 void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin("http://192.168.0.106:8080");  // Substitua pelo IP do seu computador
-    //http.begin("https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht");
+    http.begin("https://estacao-meteorologica.vercel.app/dht");  
+    //http.begin("http://192.168.0.106:8080"); // Substitua pelo IP do seu computador
     http.addHeader("Content-Type", "application/json");
 
-    float temp = dht.readTemperature();
-    float umidade = dht.readHumidity();
+    char json_buffer[100];
+    char datetime[20];
+    get_current_datetime(datetime, sizeof(datetime));
 
-    //String data = "Este é o dado que quero enviar";
-    //data = "TEMP C " + String(temp) + " -- Umidade " + String(umidade) + " %" ;
+    char temp_str[6];  // "xx.xx" + null terminator
+    char humidity_str[6];  // "xx.xx" + null terminator
 
-     // Cria o objeto JSON
-    DynamicJsonDocument doc(1024); // Ajuste o tamanho conforme necessário
-    doc["temperatura"] = temp;
-    doc["umidade"] = umidade;
+    // Formatação dos valores
+    read_dht_temp(temp_str);
+    read_dht_humidity(humidity_str);
 
-    String jsonData;
-    serializeJson(doc, jsonData);
+    // Formatação do JSON
+    snprintf(json_buffer, sizeof(json_buffer), "{\"data\": \"%s\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  datetime, temp_str, humidity_str);
+
+    Serial.println(json_buffer);
     
-    int httpResponseCode = http.POST(jsonData);
+    
+    int httpResponseCode = http.POST(json_buffer);
 
     if (httpResponseCode > 0) {
       String response = http.getString();
@@ -61,5 +83,6 @@ void loop() {
 
     http.end();
   }
-  delay(10000); // Envia a cada 5 segundos
+  delay(10000); // Envia a cada 10 segundos
 }
+

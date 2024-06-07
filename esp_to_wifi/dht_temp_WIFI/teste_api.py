@@ -26,4 +26,3 @@ print(type(dados))
 # hivern
 # mqtt-client.empx
 # text.mosquito
-
