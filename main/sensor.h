@@ -1,9 +1,7 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include <iostream>
-#include <Arduino.h>
-#include <ArduinoJson.h>
+#include "includes.h"
 
 class Sensor {
   public:

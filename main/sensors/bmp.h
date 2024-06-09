@@ -48,6 +48,7 @@ String BmpSensor::getJsonData() {
   getData();
 
   DynamicJsonDocument doc(256);
+  doc["temperatura"] = temperature
   doc["pressao"] = pressure;
   doc["altitude"] = altitude;
 
