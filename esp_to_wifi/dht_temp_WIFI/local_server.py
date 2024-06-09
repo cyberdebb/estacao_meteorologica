@@ -1,8 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from datetime import datetime
 import requests
 import json
+from time import sleep
 
 nome_arquivo = 'dados_sensor.csv'
 arquivo_json = 'dados_sensor.json'
@@ -29,6 +29,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length).decode('utf-8')  # Decodifica os dados aqui
         print("Received data:", post_data)
+        #post_data = '{"temperatura": 18.60000038, "umidade": 87, "data": "19:48:46 01/06/2024"}'
         
         try:
             dados = json.loads(post_data)  # Tenta analisar a string como JSON
@@ -39,8 +40,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"Data received")
             dados_atualizados = self.salvar_dados(dados)
             
-            status_code, response_text = enviar_dados(dados_atualizados, "https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht")
-            print(f"Enviado para endpoint remoto: {status_code}, {response_text}")
+            #status_code, response_text = enviar_dados(dados_atualizados, "https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/dht")
+                                                                        #https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/post/dht
+            #print(f"Enviado para endpoint remoto: {status_code}, {response_text}")
             
             
         except json.JSONDecodeError:
@@ -53,14 +55,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         
                 
     def salvar_dados(self, dados):
-        now = datetime.now()
-        horario = now.strftime("%H:%M:%S %d/%m/%Y")
+        
         
         
         # Extrai dados do JSON
         temp = dados.get('temperatura', 'N/A')
         umidade = dados.get('umidade', 'N/A')
-        dados['data'] = horario
+        horario = dados.get('data', 'N/A')
             
    
    

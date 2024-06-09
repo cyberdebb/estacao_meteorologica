@@ -49,8 +49,14 @@ String PluviometerSensor::getSensorData() {
   getData();
 
   char buffer[100];
-  snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);
+  //snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);
+  int idStation = 1;
+  
+  snprintf(buffer, sizeof(buffer),
+             "{\"Pluviometer\": [{\"rainfall\": %.2f, \"idStation\": %d}]}",
+             volume_coletado, idStation);
   return String(buffer);
+
 }
 
 PluviometerSensor::~PluviometerSensor() {}
