@@ -14,7 +14,6 @@ class WindIndicatorSensor : public Sensor {
   public:
     WindIndicatorSensor(int win_pin);
     void getData();
-    String getJsonData() override;
     String getSensorData() override;
     ~WindIndicatorSensor();
 };
@@ -53,19 +52,6 @@ void WindIndicatorSensor::getData() {
     Winddir = 000;  // Default to 0 if direction is indeterminate
     windDirection = "Indeterminada";
   }
-}
-
-String WindIndicatorSensor::getJsonData() {
-  getData();
-
-  DynamicJsonDocument doc(256);
-  doc["direcao"] = windDirection;
-  doc["angulo"] = Winddir;
-  
-  String jsonData;
-  serializeJson(doc, jsonData);
-
-  return jsonData;
 }
 
 String WindIndicatorSensor::getSensorData() {

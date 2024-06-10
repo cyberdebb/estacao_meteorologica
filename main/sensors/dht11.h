@@ -16,7 +16,6 @@ class DhtSensor : public Sensor {
     DhtSensor(uint8_t pin, uint8_t type);
     void begin();
     void getData();
-    String getJsonData() override;
     String getSensorData() override;
     ~DhtSensor();
 };
@@ -31,21 +30,6 @@ void DhtSensor::getData() {
   temperature = dht.readTemperature();
   humidity = dht.readHumidity();
 }
-
-String DhtSensor::getJsonData() {
-  getData();
-
-  DynamicJsonDocument doc(256);
-  doc["temperatura"] = temperature;
-  doc["umidade"] = humidity;
-
-  String jsonData;
-  serializeJson(doc, jsonData);
-
-  return jsonData;
-}
-
-
 
 void read_dht_temp(char* temp_str) {
     float temp = dht.readTemperature();
@@ -62,8 +46,6 @@ void get_current_datetime(char* buffer, size_t buffer_size) {
     struct tm* tm_info = localtime(&now);
     strftime(buffer, buffer_size, "%H:%M:%S %d/%m/%Y", tm_info);
 }
-
-
 
 String DhtSensor::getSensorData() {
   //getData();
@@ -86,8 +68,6 @@ String DhtSensor::getSensorData() {
   snprintf(json_buffer, sizeof(json_buffer), "{\"data\": \"%s\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  datetime, temp_str, humidity_str);
 
   return String(json_buffer);
-
-
 }
 
 DhtSensor::~DhtSensor() {}

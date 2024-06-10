@@ -19,7 +19,6 @@ class BmpSensor : public Sensor {
     uint8_t sensorID();
     void setSampling(Adafruit_BMP280::sensor_mode mode, Adafruit_BMP280::sensor_sampling tempSampling, Adafruit_BMP280::sensor_sampling pressSampling, Adafruit_BMP280::sensor_filter filter, Adafruit_BMP280::standby_duration duration);
     void getData();
-    String getJsonData() override;
     String getSensorData() override;
     ~BmpSensor();
 };
@@ -42,20 +41,6 @@ void BmpSensor::getData() {
   temperature = bmp.readTemperature();
   pressure = bmp.readPressure();
   altitude = bmp.readAltitude(1011);
-}
-
-String BmpSensor::getJsonData() {
-  getData();
-
-  DynamicJsonDocument doc(256);
-  doc["temperatura"] = temperature
-  doc["pressao"] = pressure;
-  doc["altitude"] = altitude;
-
-  String jsonData;
-  serializeJson(doc, jsonData);
-
-  return jsonData;
 }
 
 String BmpSensor::getSensorData() {

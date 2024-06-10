@@ -22,7 +22,6 @@ class AnemometerSensor : public Sensor {
     void calculateWindSpeedMetersPerSecond();
     void calculateWindSpeedKilometersPerHour();
     void getData();
-    String getJsonData() override;
     String getSensorData() override;
     ~AnemometerSensor();
 };
@@ -52,20 +51,6 @@ void AnemometerSensor::getData() {
   calculateRPM();
   calculateWindSpeedMetersPerSecond();
   calculateWindSpeedKilometersPerHour();
-}
-
-String AnemometerSensor::getJsonData() {
-  getData();
-
-  DynamicJsonDocument doc(256);
-  doc["rpm"] = rpm;
-  doc["velocidade_metros_por_segundo"] = windSpeedMetersPerSecond;
-  doc["velocidade_quilometros_por_hora"] = windSpeedKilometersPerHour;
-
-  String jsonData;
-  serializeJson(doc, jsonData);
-
-  return jsonData;
 }
 
 String AnemometerSensor::getSensorData() {
