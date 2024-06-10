@@ -40,8 +40,7 @@ O diagrama abaixo define a configuração física utilizada e a interconexão do
 
 1. **Baixe e Instale o Driver:**
 
-    - Antes de conectar o ESP32 ao seu computador, é necessário instalar o driver adequado para garantir que o dispositivo seja reconhecido corretamente. Você pode encontrar o driver específico para o ESP32 no seguinte link:
-        - [Instalação do Driver para ESP32 - RoboCore](https://www.robocore.net/tutoriais/instalando-driver-do-nodemcu)
+    - Antes de conectar o ESP32 ao seu computador, é necessário instalar o driver adequado para garantir que o dispositivo seja reconhecido corretamente. Você pode encontrar o driver específico para o ESP32 no seguinte link: [Instalação do Driver para ESP32 - RoboCore](https://www.robocore.net/tutoriais/instalando-driver-do-nodemcu)
     - Siga as instruções no site para baixar e instalar o driver correspondente ao seu sistema operacional.
 
 2. **Conectar o ESP32 ao Computador:**
