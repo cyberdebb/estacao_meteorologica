@@ -31,18 +31,19 @@ Conta ainda com alta precisão e boa estabilidade já sendo calibrado de fábric
 - Ideal para estufas, áreas de proteção ambiental monitoradas, estações meteorológicas, portos, áreas agrícolas, entre outros ambientes;
 
 **ESPECIFICAÇÕES:**
-- Modelo: SV10;
-- Material: Alumínio;
-- Tensão de trabalho: 5V DC;
-- Tipo: Digital;
-- Medição máx.: 120 Km/h;
-- Alta sensibilidade, inicia em 0,9 Km/h (0,25m/s);
-- Meio de transmissão: cabo;
-- Temperatura de trabalho: -40C ~ 80C;
-- Comprimento do cabo: ~ 5 metros;
-- Comprimento suporte: 205mm;
-- Diâmetro do copo: 50mm;
-- Diâmetro máximo tubo para fixação: 35mm;
-- Dimensões totais (CxA): ~30x12cm;
-- Peso: 330g;
-- Peso com embalagem: 400g.
+| INFORMAÇÃO                        | Anemômetro Arduino SV10 |
+| --------------------------------- | ----------------------- |
+| MATERIAL                          | Alumínio                |
+| TENSÃO DE TRABALHO                | 5V DC                   |
+| TIPO                              | Digital                 |
+| MEDIÇÃO MÁXIMA                    | 120 Km/h                |
+| MEIO DE TRANSMISSÃO               | cabo                    |
+| TEMPERATURA DE TRABALHO           | -40C ~ 80C              |
+| COMPRIMENTO DO CABO               | ~5 metros               |
+| COMPRIMENTO SUPORTE               | 205mm                   |
+| DIÂMETRO DO COPO                  | 50mm                    |
+| DIÂMETRO MÁXIMO TUBO PARA FIXAÇÃO | 35mm                    |
+| DIMENSÕES TOTAIS (CxA)            | ~30x12cm                |
+| PESO                              | 330g                    |
+| PESO COM EMBALAGEM                | 400g                    |
+
