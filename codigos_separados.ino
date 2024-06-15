@@ -158,7 +158,7 @@ void countRevolution() {
 /***************************************************************************
 Indicador de vento DV10 
  ***************************************************************************/
-#define PIN 36
+#define PIN 26
 
 float valor = 0;   // declara a variável inicial em 0
 int Winddir = 0;   // Declara o valor inicial em 0
