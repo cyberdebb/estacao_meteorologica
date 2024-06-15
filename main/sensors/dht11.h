@@ -53,12 +53,12 @@ String DhtSensor::getSensorData() {
   //char buffer[80];
   //snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);
 
-  char temp_str[6];  // "xx.xx" + null terminator
-  char humidity_str[6];  // "xx.xx" + null terminator
-  char datetime[20];
-  get_current_datetime(datetime, sizeof(datetime));
+  // char temp_str[6];  // "xx.xx" + null terminator
+  // char humidity_str[6];  // "xx.xx" + null terminator
+  // char datetime[20];
+  // get_current_datetime(datetime, sizeof(datetime));
 
-    // Formatação dos valores
+  // Formatação dos valores
   // read_dht_temp(temp_str);
   // read_dht_humidity(humidity_str);
 
