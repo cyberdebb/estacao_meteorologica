@@ -9,16 +9,33 @@ def enviar_dados(dados, url):
     print(response.status_code, response.text)
     #return response.status_code, response.text
 
+"""export const anemometerSchema = joi.object({
+    windSpeed: joi.number().required(),
+    windDirection: joi.string().required().trim(),
+    windAngle: joi.number().required(),
+    idStation: joi.string().required().trim(),
+});"""
  
-#post_data = '{"data": "19:48:46 01/06/2024", "temperatura": 18.6, "umidade": 87 }'
+##dht
+post_data = '{"idStation": "00", "temperatura": "18.60", "umidade": "87.00"}'
+url = "https://estacao-meteorologica.vercel.app/dht"
 
-post_data =   '{"data": "19:48:46 01/06/2024", "temperatura": "18.60", "umidade": "87.00"}'
+##pluviometer
+#post_data = '{"rainfall": "10.50", "idStation": "0"}'
+#url = "https://estacao-meteorologica.vercel.app/pluviometer"
 
+##bmp
+#post_data = '{ "pressure": "1013.25", "temperature": "25.5", "altitude": "150.0", "idStation": "0" }'
+#url = "https://estacao-meteorologica.vercel.app/bmp"
+
+##anemometer
+#post_data = '{"windSpeed": "5.50", "windDirection": "N", "windAngle": "0.0", "idStation": "0"}'
+#post_data = '{"windSpeed": 5.50, "windDirection": "N", "windAngle": 0.0, "idStation": "0"}'
+#url = "https://estacao-meteorologica.vercel.app/anemometer"
 
 dados = json.loads(post_data)  # Tenta analisar a string como JSON
 
-#url = "https://estacao-meteorologica-im7c10its-ludmilas-projects-fb4d1943.vercel.app/dht"
-url = "https://estacao-meteorologica.vercel.app/dht"
+
 
 enviar_dados(dados, url)      
 print(type(dados))
