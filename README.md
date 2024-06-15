@@ -24,12 +24,12 @@ Esta seção descreve detalhadamente os componentes e processos utilizados na co
 O diagrama abaixo define a configuração física utilizada e a interconexão dos componentes da estação meteorológica: 
 ![Diagrama PI_Grande](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/c75c16e5-882f-4b96-8760-c9f6ee9439b8)
 
-|                           SENSOR                           | VCC  |      GND       | OUT |
-| :--------------------------------------------------------: | :--: | :------------: | :-: |
-|          <font color="#004aad">Anemômetro</font>           |  5V  | Resistor + GND | G2  |
-|          <font color="#38b6ff">Pluviômetro</font>          |  5V  | Resistor + GND | G13 |
-|             <font color="#5ca30d">DHT11</font>             | 3.3V |      GND       | G15 |
-| <font color="#cb6ce6">Indicador de Direção do Vento</font> |  5V  | Resistor + GND | G26 |
+|                            SENSOR                            | VCC  |      GND       | OUT |
+| :----------------------------------------------------------: | :--: | :------------: | :-: |
+|          <p style="color: #004aad;">Anemômetro</p>           |  5V  | Resistor + GND | G2  |
+|          <p style="color: #38b6ff;">Pluviômetro</p>          |  5V  | Resistor + GND | G13 |
+|             <p style="color: #5ca30d;">DHT11</p>             | 3.3V |      GND       | G15 |
+| <p style="color: #cb6ce6;">Indicador de Direção do Vento</p> |  5V  | Resistor + GND | G26 |
 
 ### Tutorial de como fazer o esp32 funcionar
 
