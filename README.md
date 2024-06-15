@@ -24,7 +24,7 @@ Esta seção descreve detalhadamente os componentes e processos utilizados na co
 O diagrama abaixo define a configuração física utilizada e a interconexão dos componentes da estação meteorológica: 
 ![Diagrama PI_Grande](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/c75c16e5-882f-4b96-8760-c9f6ee9439b8)
 
-![image](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/6a51d8d0-6ccd-4175-a842-3708d647fb97)
+![Imagem do WhatsApp de 2024-06-15 à(s) 17 48 53_0760c21e](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a055155b-81d3-48e2-a00d-33777d665640)
 
 ### Tutorial de como fazer o esp32 funcionar
 
