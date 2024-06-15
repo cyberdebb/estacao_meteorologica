@@ -10,6 +10,9 @@ Este pluviômetro é projetado para medir a quantidade de chuva e inclui:
 - Fios e conectores à escolha para ligar ao interruptor de lâmina.
 - Uma gota de cola para fixar o ímã.
 
+O pluviômetro foi impresso em uma impressora 3d utilizando os seguintes arquivos:
+[Pluviometro Gcode's.zip](https://github.com/user-attachments/files/15755285/Pluviometro.Gcode.s.zip)
+
 O funil é fixado à base por meio de uma rosca impressa, utilizando a biblioteca de rosca do Aubend's Poor man's openscad ([https://www.thingiverse.com/thing:8796](https://www.thingiverse.com/thing:8796)). A pequena torre atrás do sensor serve para segurar o fio de saída com uma abraçadeira.
 
 **Configurações de Impressão**
