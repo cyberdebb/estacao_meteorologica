@@ -43,7 +43,6 @@ String PluviometerSensor::getSensorData() {
          "{\"rainfall\": \"%.2f\", \"idStation\": \"%d\"}",
          volume_coletado, idStation);
 
-             
   return String(buffer);
 
 }

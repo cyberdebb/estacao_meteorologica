@@ -47,37 +47,14 @@ String BmpSensor::getSensorData() {
   getData();
 
   char buffer[150];
-<<<<<<< HEAD:main/sensors/bmp.h
-  snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
-  
-  // int idStation = 1;
-
-  // snprintf(buffer, sizeof(buffer),
-  //            "{\"BMP280\": [{\"pressure\": %.2f, \"temperature\": %.2f, \"altitude\": %.2f, \"idStation\": %d}]}",
-  //            pressure, temperature, altitude, idStation);
-=======
   //snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
   int idStation = 0;
 
   snprintf(buffer, sizeof(buffer),
              '{\"idStation\": \"%d\",\"temperature\": \"%.2f\", \"pressure\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,temperature, pressure, altitude);
              
->>>>>>> 81d12e57c3f7d80e010d1bdeebab1504fa707800:scr/sensors/bmp.h
   return String(buffer);
 }
-
-/*
-{
-    "BMP280": [
-        {
-            "pressure": 0.00,
-            "temperature": 0.00,
-            "altitude": 0.00,
-            "idStation": 0
-        }
-    ]
-}
-*/
 
 BmpSensor::~BmpSensor() {}
 

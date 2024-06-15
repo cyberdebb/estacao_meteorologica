@@ -48,7 +48,7 @@ void DhtSensor::getData() {
 // }
 
 String DhtSensor::getSensorData() {
-  //getData();
+  getData();
 
   //char buffer[80];
   //snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);
