@@ -48,11 +48,11 @@ String BmpSensor::getSensorData() {
 
   char buffer[150];
   //snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
-  int idStation = 1;
+  int idStation = 0;
 
   snprintf(buffer, sizeof(buffer),
-             "{\"BMP280\": [{\"pressure\": %.2f, \"temperature\": %.2f, \"altitude\": %.2f, \"idStation\": %d}]}",
-             pressure, temperature, altitude, idStation);
+             '{\"idStation\": \"%d\",\"temperature\": \"%.2f\", \"pressure\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,temperature, pressure, altitude);
+             
   return String(buffer);
 }
 

@@ -65,7 +65,7 @@ String DhtSensor::getSensorData() {
   // Formatação do JSON
   char json_buffer[100];
 
-  snprintf(json_buffer, sizeof(json_buffer), "{\"data\": \"%s\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  datetime, temp_str, humidity_str);
+  snprintf(json_buffer, sizeof(json_buffer), "{\"idStation\": \"%d\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  idStation, temp_str, humidity_str);
 
   return String(json_buffer);
 }
