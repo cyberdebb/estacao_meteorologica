@@ -4,6 +4,12 @@
 #include "../sensor.h"
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
+#include <WiFi.h>
+
+
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
 
 // BMP280 sensor class
 class BmpSensor : public Sensor {
@@ -47,12 +53,55 @@ String BmpSensor::getSensorData() {
   getData();
 
   char buffer[150];
-  //snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
   int idStation = 0;
 
   snprintf(buffer, sizeof(buffer),
-             '{\"idStation\": \"%d\",\"temperature\": \"%.2f\", \"pressure\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,temperature, pressure, altitude);
-             
+             '{\"idStation\": \"%d\",\"temperature\": \"%.2f\", \"pressure\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation, temperature, pressure, altitude);
+
+  
+  // ---------------------------------------------------------------------------
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando ao WiFi...");
+  }
+  Serial.println("Conectado ao WiFi");
+
+  Serial.println("Endereço de IP: ");
+  Serial.println(WiFi.localIP());
+
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("https://estacao-meteorologica.vercel.app/bmp");  
+    http.addHeader("Content-Type", "application/json");
+
+   
+    Serial.println(buffer);
+    
+    
+    int httpResponseCode = http.POST(buffer);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println(httpResponseCode);
+      Serial.println(response);
+    } else {
+      Serial.print("Erro no envio, código: ");
+      Serial.println(httpResponseCode);
+    }
+
+    http.end();
+  }
+
+  else {
+    Serial.println("Não há conexão Wi-Fi disponível. Tentando reconectar...");
+    WiFi.disconnect();
+    WiFi.begin(ssid, password);
+}
+
+  // ---------------------------------------------------------------------------
+ // acho que nao precisa do return 
   return String(buffer);
 }
 

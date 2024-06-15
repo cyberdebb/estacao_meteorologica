@@ -6,6 +6,11 @@
 #define VOLUME 3.05 // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
 
 #include "../sensor.h"
+#include <WiFi.h>
+
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
 
 // Pluviometer sensor class
 class PluviometerSensor : public Sensor {
@@ -43,6 +48,53 @@ String PluviometerSensor::getSensorData() {
          "{\"rainfall\": \"%.2f\", \"idStation\": \"%d\"}",
          volume_coletado, idStation);
 
+
+   //--------------------------------------------------------------------------------------
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando ao WiFi...");
+  }
+  Serial.println("Conectado ao WiFi");
+
+  Serial.println("Endereço de IP: ");
+  Serial.println(WiFi.localIP());
+
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("https://estacao-meteorologica.vercel.app/pluviometer");  
+    http.addHeader("Content-Type", "application/json");
+
+   
+    Serial.println(buffer);
+    
+    
+    int httpResponseCode = http.POST(buffer);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println(httpResponseCode);
+      Serial.println(response);
+    } else {
+      Serial.print("Erro no envio, código: ");
+      Serial.println(httpResponseCode);
+    }
+
+    http.end();
+
+
+  }
+
+  else {
+    Serial.println("Não há conexão Wi-Fi disponível. Tentando reconectar...");
+    WiFi.disconnect();
+    WiFi.begin(ssid, password);
+}
+
+  // --------------------------------------
+             
   return String(buffer);
 
 }
