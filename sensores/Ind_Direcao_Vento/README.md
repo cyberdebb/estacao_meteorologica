@@ -1,4 +1,4 @@
-# Indicador de Diração de Vento SV10
+# Indicador de Direção do Vento SV10
 ![image-removebg-preview (5)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/5addfcc9-ec4f-4d65-b7c1-ada5bca67632)
 
 O Indicador de Direção do Vento é mais um recurso para estação meteorológica, uma ferramenta de verificação climática que possui a capacidade de proporcionar diversos tipos de dados, dentre eles podemos destacar a verificação da velocidade do vento através de um anemômetro e a verificação da quantidade de chuva através de um pluviômetro.
@@ -38,3 +38,33 @@ O sistema de funcionamento do Indicador de Direção do Vento é extremamente si
 Indicador de Direção do Vento e Pá de deslocamento
 
 Para quem deseja uma visualização direta da informação de maneira não digital, vale ressaltar os elementos de indicação da direção do vento e a pá de deslocamento, elementos responsáveis por indicar e posicionar o sensor de acordo com o vento que sopra no local de verificação.
+
+**ESPECIFICAÇÕES:**
+
+| INFORMAÇÃO                        | Indicador de Direção do Vento Arduino SV10 |
+| --------------------------------- | ------------------------------------------ |
+| MATERIAL                          | Alumínio e Plástico Resistente             |
+| TENSÃO DE TRABALHO                | 5V DC                                      |
+| TIPO                              | Analógico                                  |
+| MEIO DE TRANSMISSÃO               | cabo                                       |
+| TEMPERATURA DE TRABALHO           | -40C ~ 80C                                 |
+| COMPRIMENTO DO CABO               | ~5 metros                                  |
+| COMPRIMENTO SUPORTE               | 205mm                                      |
+| DIÂMETRO MÁXIMO TUBO PARA FIXAÇÃO | 35mm                                       |
+| GIRO                              | 360°                                       |
+| PRECISÃO                          | ~95%                                       |
+
+**CARACTERÍSTICAS:**
+- Pode ser utilizado com outros microcontroladores;  
+- Eixo com rolamento lacrado (livre de manutenção);  
+- Sensor magnético lacrado;  
+- Fácil instalação;  
+- Alta precisão;  
+- Boa estabilidade;  
+- Linearidade de dados;  
+- Forte proteção anti-interferência;  
+- Abraçadeira para fixação;  
+- Proteção contra intempéries;  
+- Ideal para estufas, áreas de proteção ambiental monitoradas, estações meteorológicas, portos, áreas agrícolas, entre outros ambientes;
+
+
