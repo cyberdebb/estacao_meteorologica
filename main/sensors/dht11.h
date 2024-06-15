@@ -48,27 +48,26 @@ void DhtSensor::getData() {
 // }
 
 String DhtSensor::getSensorData() {
-  getData();
+  //getData();
 
-  char buffer[80];
-  snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);
+  //char buffer[80];
+  //snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);
 
-  // char temp_str[6];  // "xx.xx" + null terminator
-  // char humidity_str[6];  // "xx.xx" + null terminator
-  // char datetime[20];
-  // get_current_datetime(datetime, sizeof(datetime));
+  char temp_str[6];  // "xx.xx" + null terminator
+  char humidity_str[6];  // "xx.xx" + null terminator
+  char datetime[20];
+  get_current_datetime(datetime, sizeof(datetime));
 
-  //   // Formatação dos valores
+    // Formatação dos valores
   // read_dht_temp(temp_str);
   // read_dht_humidity(humidity_str);
 
-  // // Formatação do JSON
-  // char json_buffer[100];
+  // Formatação do JSON
+  char json_buffer[100];
 
-  // snprintf(json_buffer, sizeof(json_buffer), "{\"data\": \"%s\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  datetime, temp_str, humidity_str);
+  snprintf(json_buffer, sizeof(json_buffer), "{\"idStation\": \"%d\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  idStation, temp_str, humidity_str);
 
-  // return String(json_buffer);
-  return String(buffer);
+  return String(json_buffer);
 }
 
 DhtSensor::~DhtSensor() {}
