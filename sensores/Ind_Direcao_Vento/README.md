@@ -1,4 +1,4 @@
-# Indicador de Direção do Vento SV10
+# Indicador de Direção do Vento Arduino DV10
 ![image-removebg-preview (5)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/5addfcc9-ec4f-4d65-b7c1-ada5bca67632)
 
 O Indicador de Direção do Vento é mais um recurso para estação meteorológica, uma ferramenta de verificação climática que possui a capacidade de proporcionar diversos tipos de dados, dentre eles podemos destacar a verificação da velocidade do vento através de um anemômetro e a verificação da quantidade de chuva através de um pluviômetro.
