@@ -1,4 +1,5 @@
 # ESP32 WROOM WIFI
+![image-removebg-preview (8)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/f89236a9-c323-464c-9cdf-1744fc95047e)
 
 O Módulo [ESP32 com Wifi e Bluetooth ESP-WROOM-32](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é um compacto e poderoso eletrônico baseado no chip ESP32-D0WDQ6, que mostra-se uma evolução do conhecido módulo ESP8266 da Espressif Systems, incorporando conectividade WiFi e conexão Bluetooth.  
 
