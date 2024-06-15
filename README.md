@@ -1,4 +1,4 @@
-
+# Estação Metereológica
 ## 1. Introdução
 
 Este projeto visa desenvolver uma solução integrada para o monitoramento de condições meteorológicas, utilizando tecnologias de ponta em hardware e comunicações. Neste repositório, focaremos exclusivamente na montagem do hardware e na integração do sistema embarcado com um servidor remoto, detalhando cada componente usado, sua configuração e a interconexão necessária para a transmissão eficiente de dados.
