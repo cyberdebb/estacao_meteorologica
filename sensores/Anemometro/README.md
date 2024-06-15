@@ -1,5 +1,5 @@
 # Anemômetro Arduino SV10
-![image](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/d7f4e582-aff9-4c0a-a20e-54de8cdbab07)
+![image-removebg-preview](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/e26fc378-fd3a-42bb-86ed-dd05aaa47658)
 
 O Anemômetro Arduino é um equipamento eletrônico, também conhecido com sensor de vento, que foi desenvolvido com a finalidade de medir a velocidade do vento em projetos envolvendo plataformas microcontroladoras, entre elas, o Arduino e o Raspberry Pi.
 
