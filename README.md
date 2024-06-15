@@ -19,9 +19,6 @@ Esta seção descreve detalhadamente os componentes e processos utilizados na co
 - **Anemômetro SV10 Arduino**: Sensor utilizado para medir a velocidade do vento.
 - **Indicador de direção do vento DV10 Arduino**: Sensor utilizado para determinar a direção do vento.
 
-O pluviômetro foi impresso em uma impressora 3d utilizando os seguintes arquivos:
-[Pluviometro Gcode's.zip](https://github.com/user-attachments/files/15755285/Pluviometro.Gcode.s.zip)
-
 ### Diagrama dos componentes
 
 O diagrama abaixo define a configuração física utilizada e a interconexão dos componentes da estação meteorológica: 
