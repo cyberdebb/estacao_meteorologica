@@ -1,4 +1,5 @@
 # BMP280
+![image-removebg-preview (1)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a9135a6b-2431-4162-872f-95bb2dccbf72)
 
 O [Sensor De Pressão e Temperatura Bmp280](https://datasheets.eletrogate.com/BMP280.pdf) é a versão mais nova do BMP180. Possui ganhos em termos de precisão e consumo de energia, além do tamanho 63% menor, tornando comum o seu uso em dispositivos móveis e portáteis.
 
