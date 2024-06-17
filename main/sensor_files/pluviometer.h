@@ -42,11 +42,11 @@ String PluviometerSensor::getSensorData() {
 
   char buffer[100];
   //snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);
-  int idStation = 0;
+  int idStation = 1;
   
   snprintf(buffer, sizeof(buffer),
-         "{\"rainfall\": \"%.2f\", \"idStation\": \"%d\"}",
-         volume_coletado, idStation);
+         "{\"idStation\": \"%d\", \"rainfall\": \"%.2f\" }",
+         idStation,volume_coletado );
 
 
    //--------------------------------------------------------------------------------------

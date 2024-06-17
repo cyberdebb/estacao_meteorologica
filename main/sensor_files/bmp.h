@@ -53,10 +53,10 @@ String BmpSensor::getSensorData() {
   getData();
 
   char buffer[150];
-  int idStation = 0;
+  int idStation = 1;
 
   snprintf(buffer, sizeof(buffer),
-             '{\"idStation\": \"%d\",\"temperature\": \"%.2f\", \"pressure\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation, temperature, pressure, altitude);
+             '{\"idStation\": \"%d\", \"pressure\": \"%.2f\",\"temperature\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,  pressure,temperature,altitude);
 
   
   // ---------------------------------------------------------------------------

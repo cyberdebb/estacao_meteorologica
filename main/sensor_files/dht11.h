@@ -35,34 +35,22 @@ void DhtSensor::getData() {
   humidity = dht.readHumidity();
 }
 
-void read_dht_temp(char* temp_str) {
-    float temp = dht.readTemperature();
-    dtostrf(temp, 4, 2, temp_str);
-}
 
-void read_dht_humidity(char* humidity_str) {
-    float humidity = dht.readHumidity();
-    dtostrf(humidity, 4, 2, humidity_str);
-}
 
 
 
 String DhtSensor::getSensorData() {
-  //getData();
+  getData();
 
-  
-
-  char temp_str[6];  // "xx.xx" + null terminator
-  char humidity_str[6];  // "xx.xx" + null terminator
-
-  read_dht_temp(temp_str);
-  read_dht_humidity(humidity_str);
-
-  
   char buffer[100];
-  int idStation = 0;
+  
 
-  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"%d\", \"temperatura\": \"%s\", \"umidade\": \"%s\"}",  idStation, temp_str, humidity_str);
+  
+  //float humidity = dht.readHumidity();
+  //float temperature = dht.readTemperature();
+  // Formatação do JSON
+  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
+  
 
   //--------------------------------------------------------------------------------------
 
