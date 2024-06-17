@@ -16,21 +16,21 @@ def enviar_dados(dados, url):
     idStation: joi.string().required().trim(),
 });"""
  
+ 
 ##dht
-post_data = '{"idStation": "00", "temperatura": "18.60", "umidade": "87.00"}'
+post_data = '{"idStation": "1", "temperature": "19.60", "humidity": "87.00"}'
 url = "https://estacao-meteorologica.vercel.app/dht"
 
 ##pluviometer
-#post_data = '{"rainfall": "10.50", "idStation": "0"}'
+#post_data = '{"idStation": "1", "rainfall": "10.50" }'
 #url = "https://estacao-meteorologica.vercel.app/pluviometer"
 
 ##bmp
-#post_data = '{ "pressure": "1013.25", "temperature": "25.5", "altitude": "150.0", "idStation": "0" }'
+#post_data = '{  "idStation": "1" , "pressure": "1013.25", "temperature": "25.5", "altitude": "150.0"  }'
 #url = "https://estacao-meteorologica.vercel.app/bmp"
 
 ##anemometer
-#post_data = '{"windSpeed": "5.50", "windDirection": "N", "windAngle": "0.0", "idStation": "0"}'
-#post_data = '{"windSpeed": 5.50, "windDirection": "N", "windAngle": 0.0, "idStation": "0"}'
+#post_data = '{"idStation": "1", "windSpeed": "5.50", "windDirection": "N", "windAngle": "2.0" }'
 #url = "https://estacao-meteorologica.vercel.app/anemometer"
 
 dados = json.loads(post_data)  # Tenta analisar a string como JSON
