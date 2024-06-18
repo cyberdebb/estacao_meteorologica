@@ -1,14 +1,14 @@
-#include "sensors/dht11.h"
-#include "sensors/bmp.h"
-#include "sensors/pluviometer.h"
-#include "sensors/anemometer.h"
-#include "sensors/windIndicator.h"
+#include "sensor_files/dht11.h"
+#include "sensor_files/bmp.h"
+#include "sensor_files/pluviometer.h"
+#include "sensor_files/anemometer.h"
+#include "sensor_files/windIndicator.h"
 
 // Pin definitions
 #define ANE_HALL_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
 #define PLU_REED_PIN 13  // ESP32 pin where the magnetic sensor is connected - Pluviômetro
 #define DHT_PIN 15 // DHT11
-#define WIN_PIN 26 // Indicador de Vento DV10
+#define WIN_PIN 26 // Indicador de Direção Vento DV10
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
 

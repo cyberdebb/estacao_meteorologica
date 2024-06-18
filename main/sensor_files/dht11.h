@@ -4,9 +4,9 @@
 #include "../sensor.h"
 #include <DHT.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
 
-const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-const char* password = "extensaocts"; // "SUA_SENHA"
+
 
 
 // DHT11 sensor class
@@ -46,6 +46,10 @@ String DhtSensor::getSensorData() {
   
   //--------------------------------------------------------------------------------------
 
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
+
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -63,7 +67,7 @@ String DhtSensor::getSensorData() {
     http.begin("https://estacao-meteorologica.vercel.app/dht");  
     http.addHeader("Content-Type", "application/json");
 
-   
+   Serial.println("dht11");
     Serial.println(buffer);
     
     

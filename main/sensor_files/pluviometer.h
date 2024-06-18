@@ -7,9 +7,10 @@
 
 #include "../sensor.h"
 #include <WiFi.h>
+#include <HTTPClient.h>
 
-const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-const char* password = "extensaocts"; // "SUA_SENHA"
+
+
 
 
 // Pluviometer sensor class
@@ -52,6 +53,11 @@ String PluviometerSensor::getSensorData() {
 
    //--------------------------------------------------------------------------------------
 
+   
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
+
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -68,7 +74,7 @@ String PluviometerSensor::getSensorData() {
     http.begin("https://estacao-meteorologica.vercel.app/pluviometer");  
     http.addHeader("Content-Type", "application/json");
 
-   
+   Serial.println("pluviometro");
     Serial.println(buffer);
     
     

@@ -5,9 +5,9 @@
 
 #include "../sensor.h"
 #include <WiFi.h>
+#include <HTTPClient.h>
 
-const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-const char* password = "extensaocts"; // "SUA_SENHA"
+
 
 // Wind Indicator DV10 Arduino sensor class
 class WindIndicatorSensor : public Sensor {
@@ -69,13 +69,20 @@ String WindIndicatorSensor::getSensorData() {
   //         "\"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\" , ", 
   //          valor,   windDirection.c_str(), (float)Winddir );
 
-  snprintf(buffer, sizeof(buffer), 
-         "  \"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\" , ", 
-         idStation  ,valor,   windDirection.c_str(), (float)Winddir );
+   int idStation = 1;
+
+  snprintf(buffer, sizeof(buffer),
+         "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
+         idStation, valor, windDirection.c_str(), Winddir);
+
 
 
 
   // ---------------------------------------------------------------------------
+  
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -92,7 +99,7 @@ String WindIndicatorSensor::getSensorData() {
     http.begin("https://estacao-meteorologica.vercel.app/anemometer");  
     http.addHeader("Content-Type", "application/json");
 
-   
+   Serial.println("wind-indicator-anemometro");
     Serial.println(buffer);
     
     

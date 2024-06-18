@@ -5,10 +5,10 @@
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
 
 
-const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-const char* password = "extensaocts"; // "SUA_SENHA"
+
 
 
 // BMP280 sensor class
@@ -59,10 +59,14 @@ String BmpSensor::getSensorData() {
   //            '{\"pressure\": \"%.2f\",\"temperature\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,  pressure,temperature,altitude);
 
   snprintf(buffer, sizeof(buffer),
-             '{\"idStation\": \"%d\", \"pressure\": \"%.2f\",\"temperature\": \"%.2f\",  \"altitude\":\"%.2f\" }'idStation,  pressure,temperature,altitude);
-
+         "{\"idStation\": \"%d\", \"pressure\": \"%.2f\", \"temperature\": \"%.2f\",  \"altitude\": \"%.2f\"}",
+         idStation, pressure, temperature, altitude);
   
   // ---------------------------------------------------------------------------
+  
+const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
+const char* password = "extensaocts"; // "SUA_SENHA"
+
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -79,7 +83,7 @@ String BmpSensor::getSensorData() {
     http.begin("https://estacao-meteorologica.vercel.app/bmp");  
     http.addHeader("Content-Type", "application/json");
 
-   
+   Serial.println("bmp");
     Serial.println(buffer);
     
     
