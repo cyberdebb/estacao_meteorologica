@@ -5,6 +5,13 @@ Este projeto visa desenvolver uma solução integrada para o monitoramento de co
 
 Para aqueles interessados na implementação completa, incluindo o servidor, interfaces de usuário, backend, e banco de dados, esses aspectos são abordados em um repositório separado. Essa divisão permite uma especialização mais aprofundada em cada área e facilita o gerenciamento e a colaboração no desenvolvimento do projeto.
 
+## Participantes 
+- Augusto Daleffe
+- Ludmila Silveira
+- Débora Castro
+- Eduardo Swarowsky
+- Vinicius Muchulski
+
 ### Diagrama de comunicação
 ![diagrama_de_comunicacao](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a105d673-0c97-417b-b6c3-62494302f3ab)
 
