@@ -35,23 +35,15 @@ void DhtSensor::getData() {
   humidity = dht.readHumidity();
 }
 
-
-
-
-
 String DhtSensor::getSensorData() {
   getData();
 
   char buffer[100];
   
-
+  // snprintf(buffer, sizeof(buffer), "{\"TEMP C"\: \"%.2f\", \"UMIDADE\": \"%.2f %\"}", temperature, humidity);
   
-  //float humidity = dht.readHumidity();
-  //float temperature = dht.readTemperature();
-  // Formatação do JSON
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
   
-
   //--------------------------------------------------------------------------------------
 
   WiFi.begin(ssid, password);

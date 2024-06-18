@@ -41,6 +41,7 @@ String PluviometerSensor::getSensorData() {
   getData();
 
   char buffer[100];
+  
   //snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);
   int idStation = 1;
   

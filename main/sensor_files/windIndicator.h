@@ -64,6 +64,11 @@ String WindIndicatorSensor::getSensorData() {
   getData();
 
   char buffer[200];
+
+  // snprintf(buffer, sizeof(buffer), 
+  //         "\"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\" , ", 
+  //          valor,   windDirection.c_str(), (float)Winddir );
+
   snprintf(buffer, sizeof(buffer), 
          "  \"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\" , ", 
          idStation  ,valor,   windDirection.c_str(), (float)Winddir );

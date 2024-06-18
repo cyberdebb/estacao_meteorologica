@@ -8,7 +8,7 @@
 #define ANE_HALL_PIN 2  // ESP32 pin where the hall sensor is connected - Anemômetro SV10
 #define PLU_REED_PIN 13  // ESP32 pin where the magnetic sensor is connected - Pluviômetro
 #define DHT_PIN 15 // DHT11
-#define WIN_PIN 34 // Indicador de Vento DV10
+#define WIN_PIN 26 // Indicador de Vento DV10
 
 #define DELAY_TIME 1000  // Time between samples in milliseconds
 
