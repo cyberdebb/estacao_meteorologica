@@ -39,8 +39,7 @@ Indicador de Direção do Vento e Pá de deslocamento
 
 Para quem deseja uma visualização direta da informação de maneira não digital, vale ressaltar os elementos de indicação da direção do vento e a pá de deslocamento, elementos responsáveis por indicar e posicionar o sensor de acordo com o vento que sopra no local de verificação.
 
-
-**CARACTERÍSTICAS:**
+## Características
 - Pode ser utilizado com outros microcontroladores;  
 - Eixo com rolamento lacrado (livre de manutenção);  
 - Sensor magnético lacrado;  
@@ -53,8 +52,7 @@ Para quem deseja uma visualização direta da informação de maneira não digit
 - Proteção contra intempéries;  
 - Ideal para estufas, áreas de proteção ambiental monitoradas, estações meteorológicas, portos, áreas agrícolas, entre outros ambientes;
 
-**ESPECIFICAÇÕES:**
-
+## Especificações
 | INFORMAÇÃO                        | Indicador de Direção do Vento Arduino SV10 |
 | --------------------------------- | ------------------------------------------ |
 | MATERIAL                          | Alumínio e Plástico Resistente             |
@@ -68,5 +66,14 @@ Para quem deseja uma visualização direta da informação de maneira não digit
 | GIRO                              | 360°                                       |
 | PRECISÃO                          | ~95%                                       |
 
+## Conexões
+| Sensor de Direção do Vento | ESP WROOM 32 | Número Do Pino ESP32 |
+|:--------------------------:|:------------:|:--------------------:|
+|            VCC             |      5V      |          5V          |
+|            GND             |      GND     |          GND         |
+|            DAT             |     GPIO     |         GPIO26       |
+
+## Resultados
+![Imagem do WhatsApp de 2024-06-18 à(s) 14 12 54_f64e1a8b](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/805abf03-ba21-4d5a-897c-72530602b2bb)
 
 
