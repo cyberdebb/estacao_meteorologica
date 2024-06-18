@@ -34,7 +34,7 @@ void get_rain(){
 }
 
 void setup() {
-  Serial.begin(115200);       // velocidade monitor serial
+  Serial.begin(9600);       // velocidade monitor serial
 
   pinMode(REED, INPUT_PULLUP);
   attachInterrupt(REED, isr_rain, FALLING);

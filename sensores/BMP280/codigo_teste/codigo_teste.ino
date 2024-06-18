@@ -4,10 +4,10 @@
 Adafruit_BMP280 bmp;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println(F("BMP280 test"));
   unsigned status;
-  status = bmp.begin(0x76 , &Wire);
+  status = bmp.begin(0x76);
 
   if (!status) {
     Serial.println(F("Could not find a valid BMP280 sensor, check wiring or try a different address!"));
