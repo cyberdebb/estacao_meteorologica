@@ -9,7 +9,7 @@ O ESP 32 Módulo Wifi e Bluetooth conta com o microprocessador Xtensa 32-Bits LX
 
 Para proporcionar melhores resultados apresenta possibilidade de atualização do firmware via WiFi, mostrando-se um conjunto poderoso com ampla capacidade de processamento.
 
-**ESPECIFICAÇÕES:**
+## Especificações
 | INFORMAÇÃO                   | ESP32                                          |
 | ---------------------------- | ---------------------------------------------- |
 | MÓDULO                       | ESP-WROOM-32                                   |
