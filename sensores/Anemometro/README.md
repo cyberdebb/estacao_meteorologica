@@ -15,7 +15,7 @@ Permite fixar um tubo de até 35mm em seu suporte para fixação.
 
 Conta ainda com alta precisão e boa estabilidade já sendo calibrado de fábrica, possuindo sensor reed switch e forte nível de proteção anti-interferência, pronto para ser conectado ao arduino.
 
-**CARACTERÍSTICAS:**
+## Características
 - Anemômetro Arduino Fixo;  
 - Sensor de velocidade do vento;  
 - Pode ser utilizado com outros microcontroladores;  
@@ -31,7 +31,7 @@ Conta ainda com alta precisão e boa estabilidade já sendo calibrado de fábric
 - Abraçadeira para fixação;  
 - Ideal para estufas, áreas de proteção ambiental monitoradas, estações meteorológicas, portos, áreas agrícolas, entre outros ambientes;
 
-**ESPECIFICAÇÕES:**
+## Especificações
 | INFORMAÇÃO                        | Anemômetro Arduino SV10 |
 | --------------------------------- | ----------------------- |
 | MATERIAL                          | Alumínio                |
@@ -47,4 +47,15 @@ Conta ainda com alta precisão e boa estabilidade já sendo calibrado de fábric
 | DIMENSÕES TOTAIS (CxA)            | ~30x12cm                |
 | PESO                              | 330g                    |
 | PESO COM EMBALAGEM                | 400g                    |
+
+## Conexões
+| Anemômetro | ESP WROOM 32 | Número Do Pino ESP32 |
+|:----------:|:------------:|:--------------------:|
+|     VCC    |      5V      |          5V          |
+|     GND    |      GND     |          GND         |
+|     DAT    |     GPIO     |         GPIO2        |
+
+## Resultados
+![Imagem do WhatsApp de 2024-06-18 à(s) 14 16 09_2e3559ec](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/cfbaa72c-4411-4631-bd06-5f65ef79847e)
+
 
