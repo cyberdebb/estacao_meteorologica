@@ -5,12 +5,21 @@ Este projeto visa desenvolver uma solução integrada para o monitoramento de co
 
 Para aqueles interessados na implementação completa, incluindo o servidor, interfaces de usuário, backend, e banco de dados, esses aspectos são abordados em um repositório separado. Essa divisão permite uma especialização mais aprofundada em cada área e facilita o gerenciamento e a colaboração no desenvolvimento do projeto.
 
+## Participantes 
+- Augusto Daleffe
+- Ludmila Silveira
+- Débora Castro
+- Eduardo Swarowsky
+- Vinicius Muchulski
+
 ### Diagrama de comunicação
 ![diagrama_de_comunicacao](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a105d673-0c97-417b-b6c3-62494302f3ab)
 
 [Link para o repositório](https://github.com/Ludmilahttps/EstacaoMeteorologica)
 
 ## 2. Materiais e métodos 
+
+> Nota: Neste projeto, não foi utilizado o sensor de temperatura e pressão BMP280 por problemas na utilização do material. Porém, o hardware e o software permitem sua utilização para integração na estação meteorológica
 
 Esta seção descreve detalhadamente os componentes e processos utilizados na construção e operação da estação meteorológica. 
 
@@ -109,17 +118,15 @@ Para instalar todas as bibliotecas necessárias, abra o Arduino IDE, vá em Sket
     - Após apagar a memória flash, reconecte o ESP32 ao seu computador e tente carregar um novo programa. Se o programa carregar e executar corretamente, isso indica que a memória foi apagada com sucesso.
 
 ### Foto da montagem física
-
-A imagem abaixo ilustra a estação desenvolvida e em estado de operação no ponto de coleta:
+![IMG_2254](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/c5bda040-61ea-4b4f-9dab-8303a7e4922a)
 
 ### Vídeo do sistema funcionando
-
 Este vídeo demonstra a operação da estação meteorológica, enfocando a coleta e o registro de dados em tempo real:
+https://youtu.be/Y84vYU7VSpE
 
 ## 3. Resultados
 
 ### Orçamento
-
 O levantamento dos preços de cada componente foi realizado através de pesquisa na internet, consultando sites especializados na venda de componentes eletrônicos como: Amazon, Eletrogate e Usinainfo. Como referência, o orçamento foi levantado em junho/2024. Todos os componentes utilizados na construção da estação e descritos na subseção de caracterização do sistema embarcado estão compilados na tabela:
 
 | Componente                                                                           | Preço    | Fonte      |
@@ -130,5 +137,4 @@ O levantamento dos preços de cada componente foi realizado através de pesquisa
 | Anemômetro Arduino + Indicador de Direção do Vento para Estação Meteorológica SVDV10 | R$749.55 | Usinainfo  |
 
 ### Análise de resultados
-
 A seguir, será apresentada uma análise detalhada dos dados coletados pela estação meteorológica. Os resultados são fundamentais para validar a precisão e a eficácia do sistema em monitorar variáveis ambientais críticas, como temperatura, umidade, pressão atmosférica, velocidade e direção do vento, bem como precipitação. A seguir, exploramos os dados obtidos, comparando-os com padrões meteorológicos conhecidos e medições de referência para avaliar a confiabilidade do sistema.

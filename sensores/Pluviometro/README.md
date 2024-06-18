@@ -15,8 +15,7 @@ O pluviômetro foi impresso em uma impressora 3d utilizando os seguintes arquivo
 
 O funil é fixado à base por meio de uma rosca impressa, utilizando a biblioteca de rosca do Aubend's Poor man's openscad ([https://www.thingiverse.com/thing:8796](https://www.thingiverse.com/thing:8796)). A pequena torre atrás do sensor serve para segurar o fio de saída com uma abraçadeira.
 
-**Configurações de Impressão**
-
+## Configurações de Impressão
 - Impressora: Prusa i3 MK2S
 - Não utiliza base ou suportes.
 - Resolução: 0.25
@@ -26,3 +25,14 @@ O funil é fixado à base por meio de uma rosca impressa, utilizando a bibliotec
 - Material do filamento: PLA
 
 Nota: O funil deve ser impresso de cabeça para baixo. Certifique-se de rotacionar 180° no software de fatiamento, sem espelhar, para que a rosca funcione corretamente. Inclui também um arquivo STL para uma ferramenta de dobrar os pinos do interruptor de lâmina.
+
+## Conexões
+| Pluviômetro | ESP WROOM 32 | Número Do Pino ESP32 |
+|:----------:|:------------:|:--------------------:|
+|     VCC    |      5V      |          5V          |
+|     GND    |      GND     |          GND         |
+|     DAT    |     GPIO     |         GPI13        |
+
+## Resultados
+![Imagem do WhatsApp de 2024-06-18 à(s) 14 07 22_d13f54c4](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/7b3a73ce-3cfa-42ea-844d-313018212cbe)
+
