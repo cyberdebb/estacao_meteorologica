@@ -6,9 +6,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-
-
-
 // DHT11 sensor class
 class DhtSensor : public Sensor {
   private:
@@ -46,9 +43,20 @@ String DhtSensor::getSensorData() {
   
   //--------------------------------------------------------------------------------------
 
-const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-const char* password = "extensaocts"; // "SUA_SENHA"
+  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
 
+  // --------------------------------------
+
+  sendData(buffer);
+
+  return String(buffer);
+}
+
+
+void DhtSensor::sendData(const String& sensorData) {
+  const char* ssid = "Cowork-Extensao"; 
+  const char* password = "extensaocts"; 
+  const char* serverURL = "https://estacao-meteorologica.vercel.app/dht";
 
   WiFi.begin(ssid, password);
 
@@ -56,47 +64,33 @@ const char* password = "extensaocts"; // "SUA_SENHA"
     delay(1000);
     Serial.println("Conectando ao WiFi...");
   }
-  
-  Serial.println("Conectado ao WiFi");
-
-  Serial.println("Endereço de IP: ");
-  Serial.println(WiFi.localIP());
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin("https://estacao-meteorologica.vercel.app/dht");  
+    http.begin(serverURL);  
     http.addHeader("Content-Type", "application/json");
 
-   Serial.println("dht11");
-    Serial.println(buffer);
+    Serial.println("dht11");
+    Serial.println(sensorData);
     
-    
-    int httpResponseCode = http.POST(buffer);
+    int httpResponseCode = http.POST(sensorData);
 
     if (httpResponseCode > 0) {
-      String response = http.getString();
       Serial.println(httpResponseCode);
-      Serial.println(response);
+      Serial.println(http.getString());
     } else {
       Serial.print("Erro no envio, código: ");
       Serial.println(httpResponseCode);
     }
 
     http.end();
-
-
-  }
-
-  else {
+  } else {
     Serial.println("Não há conexão Wi-Fi disponível. Tentando reconectar...");
     WiFi.disconnect();
     WiFi.begin(ssid, password);
+  }
 }
 
-  // --------------------------------------
-
-  return String(buffer);
-}
 
 DhtSensor::~DhtSensor() {}
 
