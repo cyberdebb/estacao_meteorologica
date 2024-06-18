@@ -40,7 +40,7 @@ String DhtSensor::getSensorData() {
 
   char buffer[100];
   
-  // snprintf(buffer, sizeof(buffer), "{\"TEMP C"\: \"%.2f\", \"UMIDADE\": \"%.2f %\"}", temperature, humidity);
+  // snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);  
   
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
   
