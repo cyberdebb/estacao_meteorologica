@@ -12,6 +12,8 @@ Para aqueles interessados na implementação completa, incluindo o servidor, int
 
 ## 2. Materiais e métodos 
 
+> Nota: Neste projeto, não foi utilizado o sensor de temperatura e pressão BMP280 por problemas na utilização do material. Porém, o hardware e o software permitem sua utilização para integração na estação meteorológica
+
 Esta seção descreve detalhadamente os componentes e processos utilizados na construção e operação da estação meteorológica. 
 
 ### Caracterização do sistema embarcado
