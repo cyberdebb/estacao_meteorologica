@@ -1,13 +1,26 @@
 # ESP32 WROOM
 ![image-removebg-preview (1)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/9e9e1087-d345-4934-84ed-f355491677b7)
 
-O Módulo [ESP32 com Wifi e Bluetooth ESP-WROOM-32](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é um compacto e poderoso eletrônico baseado no chip ESP32-D0WDQ6, que mostra-se uma evolução do conhecido módulo ESP8266 da Espressif Systems, incorporando conectividade WiFi e conexão Bluetooth.  
+O [ESP32 DevKit V1](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é uma placa de desenvolvimento avançada que oferece um conjunto rico de recursos, tornando-a uma excelente escolha para uma variedade de aplicações que requerem capacidades sem fio, baixo consumo de energia e recursos avançados de conectividade. Aqui está uma visão geral destacando suas principais capacidades e especificações técnicas:
 
-Entre as características destacam-se a ampla aplicação em projetos eletrônicos, apresentando possibilidades de aplicação simples e complexas, como transmissões e codificação de voz, por exemplo, dispensando o uso de outros microcontroladores, entre eles, o Arduino. É principalmente voltado aos projetos da Internet das Coisas - IOT, incluindo Robótica.  
+### Principais Recursos
 
-O ESP 32 Módulo Wifi e Bluetooth conta com o microprocessador Xtensa 32-Bits LX6 que apresenta baixo consumo de energia, além de se destacar pela presença de dois núcleos de CPU (processador dual core), permitindo aplicação em conjunto com sensores, módulos e diferentes interfaces.  
+- **Integração de Componentes RF**: O ESP32 já inclui antena integrada e balun de RF, amplificador de potência, amplificadores de baixo ruído, filtros e módulo de gerenciamento de energia. A solução completa ocupa o mínimo espaço possível na placa de circuito impresso.
 
-Para proporcionar melhores resultados apresenta possibilidade de atualização do firmware via WiFi, mostrando-se um conjunto poderoso com ampla capacidade de processamento.
+- **Tecnologia de Baixo Consumo**: Utiliza chips Wi-Fi e Bluetooth de modo duplo 2,4 GHz, fabricados pela TSMC com tecnologia de 40 nm, oferecendo as melhores propriedades de potência e RF, o que garante segurança, confiabilidade e escalabilidade para uma variedade de aplicações.
+
+### Layout do Flash
+- **Organização do Flash Interno**: O flash interno do módulo ESP32 é organizado em uma única área de flash com páginas de 4096 bytes cada. O flash começa no endereço 0x00000, mas muitas áreas são reservadas para o SDK Esp32 IDF. Existem dois layouts diferentes, dependendo da presença de suporte a BLE.
+
+### Energia
+- **Fonte de Alimentação**: A energia para o Esp32 DevKit v1 é fornecida via conector USB Micro B a bordo ou diretamente pelo pino "VIN". A fonte de energia é selecionada automaticamente.
+
+- **Faixa de Tensão Externa**: O dispositivo pode operar com uma fonte de alimentação externa de 6 a 20 volts. Se utilizar mais de 12V, o regulador de tensão pode superaquecer e danificar o dispositivo. A faixa recomendada é de 7 a 12 volts.
+
+### Conectar, Registrar, Virtualizar e Programar
+- **Chip de Serial para USB**: O Esp32 DevKit v1 vem com um chip de serial para USB a bordo que permite programar e abrir o UART do módulo ESP32. Dependendo do seu sistema (Mac ou Windows), podem ser necessários drivers que podem ser baixados da página oficial de documentação da Espressif. Em sistemas Linux, o DevKit v1 deve funcionar imediatamente.
+
+![image](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/b46d96a6-a364-44a7-8699-3bbed1ecb281)
 
 ## Especificações
 | INFORMAÇÃO                          | ESP32                                         |
