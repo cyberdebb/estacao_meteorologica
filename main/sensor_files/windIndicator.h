@@ -2,12 +2,8 @@
 #define WINDINDICATOR_H
 
 #include "../sensor.h"
-
-#include "../sensor.h"
 #include <WiFi.h>
 #include <HTTPClient.h>
-
-
 
 // Wind Indicator DV10 Arduino sensor class
 class WindIndicatorSensor : public Sensor {
@@ -82,8 +78,6 @@ String WindIndicatorSensor::sendData() {
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
          idStation, valor, windDirection.c_str(), Winddir);
 
-  const char* ssid = "Cowork-Extensao"; 
-  const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/anemometer";
 
   WiFi.begin(ssid, password);

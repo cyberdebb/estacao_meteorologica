@@ -56,8 +56,6 @@ String PluviometerSensor::sendData() {
          "{\"idStation\": \"%d\", \"rainfall\": \"%.2f\" }",
          idStation,volume_coletado);
 
-  const char* ssid = "Cowork-Extensao"; 
-  const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/pluviometer";
 
   WiFi.begin(ssid, password);

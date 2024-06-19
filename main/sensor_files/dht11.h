@@ -52,8 +52,6 @@ String DhtSensor::sendData() {
 
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
 
-  const char* ssid = "Cowork-Extensao"; 
-  const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/dht";
 
   WiFi.begin(ssid, password);

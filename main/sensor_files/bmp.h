@@ -67,8 +67,6 @@ String BmpSensor::sendData() {
          "{\"idStation\": \"%d\", \"pressure\": \"%.2f\", \"temperature\": \"%.2f\",  \"altitude\": \"%.2f\"}",
          idStation, pressure, temperature, altitude);
 
-  const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
-  const char* password = "extensaocts"; // "SUA_SENHA"
   const char* serverURL = "https://estacao-meteorologica.vercel.app/bmp";
 
   WiFi.begin(ssid, password);

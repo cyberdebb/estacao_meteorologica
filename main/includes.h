@@ -5,4 +5,6 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 
+#include "settings.h"
+
 #endif
