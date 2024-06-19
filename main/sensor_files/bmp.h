@@ -67,7 +67,6 @@ String BmpSensor::sendData() {
          "{\"idStation\": \"%d\", \"pressure\": \"%.2f\", \"temperature\": \"%.2f\",  \"altitude\": \"%.2f\"}",
          idStation, pressure, temperature, altitude);
 
-  const char* serverURL = "https://estacao-meteorologica.vercel.app/bmp";
 
   WiFi.begin(ssid, password);
 
@@ -78,7 +77,7 @@ String BmpSensor::sendData() {
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverURL);  
+    http.begin(serverURL + "bmp");  
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("bmp");

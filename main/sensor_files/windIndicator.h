@@ -78,8 +78,6 @@ String WindIndicatorSensor::sendData() {
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
          idStation, valor, windDirection.c_str(), Winddir);
 
-  const char* serverURL = "https://estacao-meteorologica.vercel.app/anemometer";
-
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -89,7 +87,7 @@ String WindIndicatorSensor::sendData() {
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverURL);  
+    http.begin(serverURL + "anemometer");  
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("wind-indicator-anemometro");

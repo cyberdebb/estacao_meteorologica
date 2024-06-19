@@ -52,8 +52,6 @@ String DhtSensor::sendData() {
 
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
 
-  const char* serverURL = "https://estacao-meteorologica.vercel.app/dht";
-
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -63,7 +61,7 @@ String DhtSensor::sendData() {
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverURL);  
+    http.begin(serverURL + "dht");  
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("dht11");

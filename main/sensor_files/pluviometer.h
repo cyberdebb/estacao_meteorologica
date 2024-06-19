@@ -56,8 +56,6 @@ String PluviometerSensor::sendData() {
          "{\"idStation\": \"%d\", \"rainfall\": \"%.2f\" }",
          idStation,volume_coletado);
 
-  const char* serverURL = "https://estacao-meteorologica.vercel.app/pluviometer";
-
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -67,7 +65,7 @@ String PluviometerSensor::sendData() {
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverURL);  
+    http.begin(serverURL + "pluviometer");  
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("pluviometro");
