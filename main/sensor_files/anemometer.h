@@ -23,7 +23,7 @@ class AnemometerSensor : public Sensor {
     void calculateWindSpeedKilometersPerHour();
     void getData();
     String getSensorData() override;
-    String sendData() override;
+    String sendSensorData() override;
     ~AnemometerSensor();
 };
 
@@ -65,7 +65,7 @@ String AnemometerSensor::getSensorData() {
 }
 
 // Send data to web server
-String AnemometerSensor::sendData() {
+String AnemometerSensor::sendSensorData() {
   getData();
 
   char buffer[200];

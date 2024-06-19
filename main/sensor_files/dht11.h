@@ -18,7 +18,7 @@ class DhtSensor : public Sensor {
     void begin();
     void getData();
     String getSensorData() override;
-    String sendData() override;
+    String sendSensorData() override;
     ~DhtSensor();
 };
 
@@ -52,38 +52,7 @@ String DhtSensor::sendData() {
 
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
 
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Conectando ao WiFi...");
-  }
-
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin(serverURL + "dht");  
-    http.addHeader("Content-Type", "application/json");
-
-    Serial.println("dht11");
-    Serial.println(buffer);
-    
-    int httpResponseCode = http.POST(buffer);
-
-    if (httpResponseCode > 0) {
-      Serial.println(httpResponseCode);
-      Serial.println(http.getString());
-    } else {
-      Serial.print("Erro no envio, código: ");
-      Serial.println(httpResponseCode);
-    }
-
-    http.end();
-  } else {
-    Serial.println("Não há conexão Wi-Fi disponível. Tentando reconectar...");
-    WiFi.disconnect();
-    WiFi.begin(ssid, password);
-  }
-
+  sendData("dht", buffer);
   return String(buffer);
 }
 

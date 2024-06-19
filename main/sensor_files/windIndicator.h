@@ -17,7 +17,7 @@ class WindIndicatorSensor : public Sensor {
     WindIndicatorSensor(int win_pin);
     void getData();
     String getSensorData() override;
-    String sendData() override;
+    String sendSensorData() override;
     ~WindIndicatorSensor();
 };
 
@@ -78,42 +78,9 @@ String WindIndicatorSensor::sendData() {
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
          idStation, valor, windDirection.c_str(), Winddir);
 
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Conectando ao WiFi...");
-  }
-
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin(serverURL + "anemometer");  
-    http.addHeader("Content-Type", "application/json");
-
-    Serial.println("wind-indicator-anemometro");
-    Serial.println(buffer);
-    
-    int httpResponseCode = http.POST(buffer);
-
-    if (httpResponseCode > 0) {
-      Serial.println(httpResponseCode);
-      Serial.println(http.getString());
-    } else {
-      Serial.print("Erro no envio, código: ");
-      Serial.println(httpResponseCode);
-    }
-
-    http.end();
-  } else {
-    
-    Serial.println("Não há conexão Wi-Fi disponível. Tentando reconectar...");
-    WiFi.disconnect();
-    WiFi.begin(ssid, password);
-  }
-
+  sendData("anemometer", buffer);
   return String(buffer);
 }
-
 
 WindIndicatorSensor::~WindIndicatorSensor() {}
 
