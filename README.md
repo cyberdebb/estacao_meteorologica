@@ -50,7 +50,7 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
    String serverURL = "URLDoSeuServidor"; // Substitua pela URL do seu servidor
    ```
 
-### Tutorial de como fazer o ESP32 funcionar
+### Configuração do ESP32
 
 #### Instalação do Driver para o ESP32
 
