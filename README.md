@@ -75,7 +75,7 @@ O diagrama abaixo define a configuração física utilizada e a interconexão do
 
 6. **Selecionar a Placa ESP32 e a Porta COM:**
 
-    - Após a instalação do pacote, vá em **Ferramentas > Placa** e selecione o modelo do seu ESP32 na lista sob o título "ESP32 Arduino".
+    - Após a instalação do pacote, vá em **Ferramentas > Placa** e selecione o modelo do seu ESP32 na lista sob o título "ESP32-WROOM-DA Module".
     - Vá em **Ferramentas > Porta** e selecione a porta COM que aparece (associada ao ESP32).
 
 ### Instalação das bibliotecas necessárias no Arduino IDE
