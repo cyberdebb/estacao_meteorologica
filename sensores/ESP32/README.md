@@ -1,24 +1,20 @@
 # ESP32 WROOM
 ![image-removebg-preview (1)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/9e9e1087-d345-4934-84ed-f355491677b7)
 
-O [ESP32 DevKit V1](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é uma placa de desenvolvimento avançada que oferece um conjunto rico de recursos, tornando-a uma excelente escolha para uma variedade de aplicações que requerem capacidades sem fio, baixo consumo de energia e recursos avançados de conectividade. Aqui está uma visão geral destacando suas principais capacidades e especificações técnicas:
+O [ESP32 DevKit V1](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é uma das placas de desenvolvimento criadas para avaliar o módulo ESP-WROOM-32. Baseia-se no microcontrolador ESP32 que inclui suporte a Wifi, Bluetooth, Ethernet e baixo consumo de energia, tudo em um único chip.
 
-### Principais Recursos
-
-- **Integração de Componentes RF**: O ESP32 já inclui antena integrada e balun de RF, amplificador de potência, amplificadores de baixo ruído, filtros e módulo de gerenciamento de energia. A solução completa ocupa o mínimo espaço possível na placa de circuito impresso.
-
-- **Tecnologia de Baixo Consumo**: Utiliza chips Wi-Fi e Bluetooth de modo duplo 2,4 GHz, fabricados pela TSMC com tecnologia de 40 nm, oferecendo as melhores propriedades de potência e RF, o que garante segurança, confiabilidade e escalabilidade para uma variedade de aplicações.
+O ESP32 já possui antena integrada e balun RF, amplificador de potência, amplificadores de baixo ruído, filtros e módulo de gestão de energia. A solução completa ocupa a menor quantidade possível de espaço em placa de circuito impresso. Esta placa utiliza chips Wi-Fi e Bluetooth de modo duplo 2.4 GHz da TSMC com tecnologia de baixo consumo de 40nm, oferecendo as melhores propriedades de potência e RF, o que é seguro, confiável e escalável para uma variedade de aplicações.
 
 ### Layout do Flash
-- **Organização do Flash Interno**: O flash interno do módulo ESP32 é organizado em uma única área de flash com páginas de 4096 bytes cada. O flash começa no endereço 0x00000, mas muitas áreas são reservadas para o SDK Esp32 IDF. Existem dois layouts diferentes, dependendo da presença de suporte a BLE.
+O flash interno do módulo ESP32 é organizado em uma única área de flash com páginas de 4096 bytes cada. O flash começa no endereço 0x00000, mas muitas áreas são reservadas para o SDK IDF do Esp32. Existem dois layouts diferentes baseados na presença de suporte BLE.
 
 ### Energia
-- **Fonte de Alimentação**: A energia para o Esp32 DevKit v1 é fornecida via conector USB Micro B a bordo ou diretamente pelo pino "VIN". A fonte de energia é selecionada automaticamente.
+A energia para o ESP32 DevKit V1 é fornecida através do conector USB Micro B a bordo ou diretamente pelo pino "VIN". A fonte de energia é selecionada automaticamente.
 
-- **Faixa de Tensão Externa**: O dispositivo pode operar com uma fonte de alimentação externa de 6 a 20 volts. Se utilizar mais de 12V, o regulador de tensão pode superaquecer e danificar o dispositivo. A faixa recomendada é de 7 a 12 volts.
+O dispositivo pode operar com uma fonte de alimentação externa de 6 a 20 volts. Se usar mais de 12V, o regulador de tensão pode superaquecer e danificar o dispositivo. A faixa recomendada é de 7 a 12 volts.
 
 ### Conectar, Registrar, Virtualizar e Programar
-- **Chip de Serial para USB**: O Esp32 DevKit v1 vem com um chip de serial para USB a bordo que permite programar e abrir o UART do módulo ESP32. Dependendo do seu sistema (Mac ou Windows), podem ser necessários drivers que podem ser baixados da página oficial de documentação da Espressif. Em sistemas Linux, o DevKit v1 deve funcionar imediatamente.
+O ESP32 DevKit V1 vem com um chip serial-para-USB a bordo que permite programar e abrir o UART do módulo ESP32. Dependendo do seu sistema (Mac ou Windows), podem ser necessários drivers que podem ser baixados da página de documentação oficial da Espressif. Em sistemas Linux, o DevKit V1 deve funcionar imediatamente.
 
 ![image](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/b46d96a6-a364-44a7-8699-3bbed1ecb281)
 
