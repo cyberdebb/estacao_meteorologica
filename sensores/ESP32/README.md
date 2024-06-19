@@ -1,4 +1,4 @@
-# ESP32 WROOM
+# ESP32
 ![image-removebg-preview (1)](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/9e9e1087-d345-4934-84ed-f355491677b7)
 
 O [ESP32 DevKit V1](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf) é uma das placas de desenvolvimento criadas para avaliar o módulo ESP-WROOM-32. Baseia-se no microcontrolador ESP32 que inclui suporte a Wifi, Bluetooth, Ethernet e baixo consumo de energia, tudo em um único chip.
