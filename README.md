@@ -25,7 +25,7 @@ Esta seção descreve detalhadamente os componentes e processos utilizados na co
 
 ### Caracterização do sistema embarcado
 
-- [**ESP32 WROOM**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/ESP32/README.md): Um módulo microcontrolador com Wi-Fi e Bluetooth integrados, ideal para aplicações IoT.
+- [**ESP32**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/ESP32/README.md): Um módulo microcontrolador com Wi-Fi e Bluetooth integrados, ideal para aplicações IoT.
 - [**DHT11**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/DHT11/README.md): Sensor de temperatura e umidade, usado para medições ambientais básicas.
 - [**Pluviômetro**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Pluviometro/README.md): Dispositivo utilizado para medir a quantidade de precipitação.
 - [**Anemômetro Arduino SV10**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Anemometro/README.md): Sensor utilizado para medir a velocidade do vento.
@@ -131,7 +131,7 @@ O levantamento dos preços de cada componente foi realizado através de pesquisa
 
 | Componente                                                                           | Preço    | Fonte      |
 | ------------------------------------------------------------------------------------ | -------- | ---------- |
-| ESP32 WROOM                                                                          | R$49.90  | Amazon     |
+| ESP32	                                                                               | R$49.90  | Amazon     |
 | DHT11                                                                                | R$10.36  | Eletrogate |
 | BMP280                                                                               | R$7.50   | Eletrogate |
 | Anemômetro Arduino + Indicador de Direção do Vento para Estação Meteorológica SVDV10 | R$749.55 | Usinainfo  |
