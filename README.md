@@ -5,7 +5,7 @@ Este projeto visa desenvolver uma solução integrada para o monitoramento de co
 
 Para aqueles interessados na implementação completa, incluindo o servidor, interfaces de usuário, backend, e banco de dados, esses aspectos são abordados em um repositório separado. Essa divisão permite uma especialização mais aprofundada em cada área e facilita o gerenciamento e a colaboração no desenvolvimento do projeto.
 
-## Participantes 
+### Participantes 
 - Augusto Daleffe
 - Ludmila Silveira
 - Débora Castro
@@ -38,7 +38,19 @@ O diagrama abaixo define a configuração física utilizada e a interconexão do
 
 ![Imagem do WhatsApp de 2024-06-15 à(s) 17 48 53_0760c21e](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a055155b-81d3-48e2-a00d-33777d665640)
 
-### Tutorial de como fazer o esp32 funcionar
+### Configuração de Ambiente Local
+Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conter informações sensíveis como SSID e senha da rede WiFi, além da URL do servidor:
+
+1. Navegue até a pasta `main` do seu projeto e crie um arquivo chamado `settings.h`.
+2. Adicione as seguintes linhas ao arquivo:
+   
+   ```
+   const char* ssid = "SeuSSID";  // Substitua pelo SSID da sua rede
+   const char* password = "SuaSenha";  // Substitua pela senha da sua rede
+   String serverURL = "URLDoSeuServidor"; // Substitua pela URL do seu servidor
+   ```
+
+### Tutorial de como fazer o ESP32 funcionar
 
 #### Instalação do Driver para o ESP32
 
