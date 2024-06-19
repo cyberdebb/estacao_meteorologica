@@ -4,8 +4,6 @@
 #include "../sensor.h"
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
-#include <WiFi.h>
-#include <HTTPClient.h>
 
 // BMP280 sensor class
 class BmpSensor : public Sensor {
@@ -67,7 +65,7 @@ String BmpSensor::sendSensorData() {
          "{\"idStation\": \"%d\", \"pressure\": \"%.2f\", \"temperature\": \"%.2f\",  \"altitude\": \"%.2f\"}",
          idStation, pressure, temperature, altitude);
 
-  sendData("bmp", buffer);
+  sendData("bmp", String(buffer));
   return String(buffer);
 }
 

@@ -6,8 +6,6 @@
 #define VOLUME 3.05 // volume da bascula (em cm3) (1cm3 == 1ml) (1ml == 1000mm3)
 
 #include "../sensor.h"
-#include <WiFi.h>
-#include <HTTPClient.h>
 
 // Pluviometer sensor class
 class PluviometerSensor : public Sensor {
@@ -46,7 +44,7 @@ String PluviometerSensor::getSensorData() {
 }
 
 // Send data to web server
-String PluviometerSensor::sendData() {
+String PluviometerSensor::sendSensorData() {
   getData();
 
   char buffer[100];
@@ -56,7 +54,7 @@ String PluviometerSensor::sendData() {
          "{\"idStation\": \"%d\", \"rainfall\": \"%.2f\" }",
          idStation,volume_coletado);
 
-  sendData("pluviometer", buffer);
+  sendData("pluviometer", String(buffer));
   return String(buffer);
 }
 

@@ -2,8 +2,6 @@
 #define WINDINDICATOR_H
 
 #include "../sensor.h"
-#include <WiFi.h>
-#include <HTTPClient.h>
 
 // Wind Indicator DV10 Arduino sensor class
 class WindIndicatorSensor : public Sensor {
@@ -68,7 +66,7 @@ String WindIndicatorSensor::getSensorData() {
 }
 
 // Send data to web server
-String WindIndicatorSensor::sendData() {
+String WindIndicatorSensor::sendSensorData() {
   getData();
 
   char buffer[200];
@@ -78,7 +76,7 @@ String WindIndicatorSensor::sendData() {
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
          idStation, valor, windDirection.c_str(), Winddir);
 
-  sendData("anemometer", buffer);
+  sendData("anemometer", String(buffer));
   return String(buffer);
 }
 

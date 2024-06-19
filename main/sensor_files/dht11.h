@@ -3,8 +3,6 @@
 
 #include "../sensor.h"
 #include <DHT.h>
-#include <WiFi.h>
-#include <HTTPClient.h>
 
 // DHT11 sensor class
 class DhtSensor : public Sensor {
@@ -44,7 +42,7 @@ String DhtSensor::getSensorData() {
 }
 
 // Send data to web server
-String DhtSensor::sendData() {
+String DhtSensor::sendSensorData() {
   getData();
 
   char buffer[100];
@@ -52,7 +50,7 @@ String DhtSensor::sendData() {
 
   snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
 
-  sendData("dht", buffer);
+  sendData("dht", String(buffer));
   return String(buffer);
 }
 

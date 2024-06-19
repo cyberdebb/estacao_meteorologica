@@ -8,10 +8,10 @@ class Sensor {
     virtual ~Sensor() {};
     virtual String getSensorData() = 0;
     virtual String sendSensorData() = 0;
-    void sendData(String sensorName, String& buffer);
+    void sendData(String sensorName, String buffer);
 };
 
-void Sensor::sendData(String sensorName, String& buffer) {
+void Sensor::sendData(String sensorName, String buffer) {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
