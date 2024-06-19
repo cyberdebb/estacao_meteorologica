@@ -21,6 +21,7 @@ class WindIndicatorSensor : public Sensor {
     WindIndicatorSensor(int win_pin);
     void getData();
     String getSensorData() override;
+    String sendData() override;
     ~WindIndicatorSensor();
 };
 
@@ -60,32 +61,27 @@ void WindIndicatorSensor::getData() {
   }
 }
 
+// Testing sensors locally
 String WindIndicatorSensor::getSensorData() {
   getData();
 
   char buffer[200];
+  snprintf(buffer, sizeof(buffer), "Leitura do sensor: %.2f volt\nDireção do Vento: %s\nÂngulo: %d Graus", valor, windDirection.c_str(), Winddir);
 
-  // snprintf(buffer, sizeof(buffer), "Leitura do sensor: %.2f volt\nDireção do Vento: %s\nÂngulo: %d Graus", valor, windDirection.c_str(), Winddir);
+  return String(buffer);
+}
 
+// Send data to web server
+String WindIndicatorSensor::sendData() {
+  getData();
+
+  char buffer[200];
   int idStation = 1;
 
   snprintf(buffer, sizeof(buffer),
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
          idStation, valor, windDirection.c_str(), Winddir);
 
-
-
-
-  // ---------------------------------------------------------------------------
-  
-  sendData(buffer);
-  // ------------------------------------------------------
-
-  return String(buffer);
-}
-
-
-void WindIndicatorSensor::sendData(const String& sensorData) {
   const char* ssid = "Cowork-Extensao"; 
   const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/anemometer";
@@ -103,9 +99,9 @@ void WindIndicatorSensor::sendData(const String& sensorData) {
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("wind-indicator-anemometro");
-    Serial.println(sensorData);
+    Serial.println(buffer);
     
-    int httpResponseCode = http.POST(sensorData);
+    int httpResponseCode = http.POST(buffer);
 
     if (httpResponseCode > 0) {
       Serial.println(httpResponseCode);
@@ -123,7 +119,7 @@ void WindIndicatorSensor::sendData(const String& sensorData) {
     WiFi.begin(ssid, password);
   }
 
-
+  return String(buffer);
 }
 
 

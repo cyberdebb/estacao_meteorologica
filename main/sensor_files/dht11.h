@@ -18,6 +18,7 @@ class DhtSensor : public Sensor {
     void begin();
     void getData();
     String getSensorData() override;
+    String sendData() override;
     ~DhtSensor();
 };
 
@@ -32,28 +33,25 @@ void DhtSensor::getData() {
   humidity = dht.readHumidity();
 }
 
+// Test sensors locally
 String DhtSensor::getSensorData() {
   getData();
-
+  
   char buffer[100];
+  snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);  
   
-  // snprintf(buffer, sizeof(buffer), "TEMP C %.2f -- Umidade %.2f%%", temperature, humidity);  
-  
-  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
-  
-  //--------------------------------------------------------------------------------------
-
-  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
-
-  // --------------------------------------
-
-  sendData(buffer);
-
   return String(buffer);
 }
 
+// Send data to web server
+String DhtSensor::sendData() {
+  getData();
 
-void DhtSensor::sendData(const String& sensorData) {
+  char buffer[100];
+  int idStation = 1;
+
+  snprintf(buffer, sizeof(buffer), "{\"idStation\": \"1\", \"temperature\": \"%.2f\", \"humidity\": \"%.2f\"}", temperature, humidity);
+
   const char* ssid = "Cowork-Extensao"; 
   const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/dht";
@@ -71,9 +69,9 @@ void DhtSensor::sendData(const String& sensorData) {
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("dht11");
-    Serial.println(sensorData);
+    Serial.println(buffer);
     
-    int httpResponseCode = http.POST(sensorData);
+    int httpResponseCode = http.POST(buffer);
 
     if (httpResponseCode > 0) {
       Serial.println(httpResponseCode);
@@ -89,8 +87,9 @@ void DhtSensor::sendData(const String& sensorData) {
     WiFi.disconnect();
     WiFi.begin(ssid, password);
   }
-}
 
+  return String(buffer);
+}
 
 DhtSensor::~DhtSensor() {}
 

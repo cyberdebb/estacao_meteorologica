@@ -7,10 +7,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-
-
-
-
 // BMP280 sensor class
 class BmpSensor : public Sensor {
   private:
@@ -26,6 +22,7 @@ class BmpSensor : public Sensor {
     void setSampling(Adafruit_BMP280::sensor_mode mode, Adafruit_BMP280::sensor_sampling tempSampling, Adafruit_BMP280::sensor_sampling pressSampling, Adafruit_BMP280::sensor_filter filter, Adafruit_BMP280::standby_duration duration);
     void getData();
     String getSensorData() override;
+    String sendData() override;
     ~BmpSensor();
 };
 
@@ -49,29 +46,27 @@ void BmpSensor::getData() {
   altitude = bmp.readAltitude(1011);
 }
 
+// Testing sensors locally
 String BmpSensor::getSensorData() {
+  getData();
+  
+  char buffer[150];
+  snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
+  
+  return String(buffer);
+}
+
+// Send data to web server
+String BmpSensor::sendData() {
   getData();
 
   char buffer[150];
   int idStation = 1;
 
-  // snprintf(buffer, sizeof(buffer), "Temperature = %.2f *C\nPressure = %.2f Pa\nApprox altitude = %.2f m", temperature, pressure, altitude);
-
   snprintf(buffer, sizeof(buffer),
          "{\"idStation\": \"%d\", \"pressure\": \"%.2f\", \"temperature\": \"%.2f\",  \"altitude\": \"%.2f\"}",
          idStation, pressure, temperature, altitude);
-  
-  // ---------------------------------------------------------------------------
-  
-  sendData(buffer);
 
-  // ---------------------------------------------------------------------------
-
-  return String(buffer);
-}
-
-
-void BmpSensor::sendData(const String& sensorData) {
   const char* ssid = "Cowork-Extensao"; // "SUA_REDE_WIFI"
   const char* password = "extensaocts"; // "SUA_SENHA"
   const char* serverURL = "https://estacao-meteorologica.vercel.app/bmp";
@@ -89,9 +84,9 @@ void BmpSensor::sendData(const String& sensorData) {
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("bmp");
-    Serial.println(sensorData);
+    Serial.println(buffer);
     
-    int httpResponseCode = http.POST(sensorData);
+    int httpResponseCode = http.POST(buffer);
 
     if (httpResponseCode > 0) {
       Serial.println(httpResponseCode);
@@ -107,6 +102,8 @@ void BmpSensor::sendData(const String& sensorData) {
     WiFi.disconnect();
     WiFi.begin(ssid, password);
   }
+
+  return String(buffer);
 }
 
 BmpSensor::~BmpSensor() {}

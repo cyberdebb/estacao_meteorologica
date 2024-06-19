@@ -7,6 +7,7 @@ class Sensor {
   public:
     virtual ~Sensor() {};
     virtual String getSensorData() = 0;
+    virtual String sendData() = 0;
 };
 
 #endif

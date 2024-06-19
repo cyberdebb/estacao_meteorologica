@@ -31,7 +31,7 @@ void setup() {
   dht.begin();
   delay(DELAY_TIME);
 
-  // Initialize BMP280
+  // // Initialize BMP280
   // bmp.begin(0x76);
   // delay(DELAY_TIME);
   
@@ -71,6 +71,7 @@ void loop() {
 }
 
 String formatSensorOutput(const String& name, Sensor& sensor) {
-  return "\n\n" + name + ":"+ "\n" + sensor.getSensorData();
+  return "\n\n" + name + ":"+ "\n" + sensor.getSensorData(); // test sensors locally
+  // return "\n\n" + name + ":"+ "\n" + sensor.sendData(); // send data to web server
 }
 

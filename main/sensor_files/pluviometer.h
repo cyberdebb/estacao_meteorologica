@@ -9,10 +9,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-
-
-
-
 // Pluviometer sensor class
 class PluviometerSensor : public Sensor {
   private:
@@ -27,6 +23,7 @@ class PluviometerSensor : public Sensor {
     PluviometerSensor();
     void getData();
     String getSensorData() override;
+    String sendData() override;
     ~PluviometerSensor();
 };
 
@@ -38,33 +35,27 @@ void PluviometerSensor::getData() {
   volume_coletado = (REEDCOUNT * 0.25) * 10; // volume total coletado em cm³
 }
 
+// Testing sensors locally
 String PluviometerSensor::getSensorData() {
+  getData();
+  
+  char buffer[100];
+  snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);        
+  
+  return String(buffer);
+}
+
+// Send data to web server
+String PluviometerSensor::sendData() {
   getData();
 
   char buffer[100];
-  
-  // snprintf(buffer, sizeof(buffer), "Viradas: %lu\nChuva: %.2f mm", REEDCOUNT, volume_coletado);
-    
   int idStation = 1;
   
   snprintf(buffer, sizeof(buffer),
          "{\"idStation\": \"%d\", \"rainfall\": \"%.2f\" }",
-         idStation,volume_coletado );
+         idStation,volume_coletado);
 
-
-   //--------------------------------------------------------------------------------------
-  sendData(buffer);
-   
-
-
-  // --------------------------------------
-  
-             
-  return String(buffer);
-
-}
-
-void PluviometerSensor::sendData(const String& sensorData) {
   const char* ssid = "Cowork-Extensao"; 
   const char* password = "extensaocts"; 
   const char* serverURL = "https://estacao-meteorologica.vercel.app/pluviometer";
@@ -82,9 +73,9 @@ void PluviometerSensor::sendData(const String& sensorData) {
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("pluviometro");
-    Serial.println(sensorData);
+    Serial.println(buffer);
     
-    int httpResponseCode = http.POST(sensorData);
+    int httpResponseCode = http.POST(buffer);
 
     if (httpResponseCode > 0) {
       Serial.println(httpResponseCode);
@@ -102,7 +93,7 @@ void PluviometerSensor::sendData(const String& sensorData) {
     WiFi.begin(ssid, password);
   }
 
-
+  return String(buffer);
 }
 
 PluviometerSensor::~PluviometerSensor() {}
