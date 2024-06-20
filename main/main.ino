@@ -71,7 +71,7 @@ void loop() {
 }
 
 String formatSensorOutput(const String& name, Sensor& sensor) {
-  return "\n\n" + name + ":"+ "\n" + sensor.getSensorData(); // test sensors locally
-  // return "\n\n" + name + ":"+ "\n" + sensor.sendSensorData(); // send data to web server
+  // return "\n\n" + name + ":"+ "\n" + sensor.getSensorData(); // test sensors locally
+  return "\n\n" + name + ":"+ "\n" + sensor.sendSensorData(); // send data to web server
 }
 

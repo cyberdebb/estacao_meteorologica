@@ -22,6 +22,7 @@ class AnemometerSensor : public Sensor {
     void calculateWindSpeedMetersPerSecond();
     void calculateWindSpeedKilometersPerHour();
     void getData();
+    float getSpeed();
     String getSensorData() override;
     String sendSensorData() override;
     ~AnemometerSensor();
@@ -54,6 +55,11 @@ void AnemometerSensor::getData() {
   calculateWindSpeedKilometersPerHour();
 }
 
+float AnemometerSensor::getSpeed() {
+  getData();
+  return windSpeedMetersPerSecond;
+}
+
 // Testing sensors locally
 String AnemometerSensor::getSensorData() {
   getData();
@@ -69,8 +75,12 @@ String AnemometerSensor::sendSensorData() {
   getData();
 
   char buffer[200];
-  snprintf(buffer, sizeof(buffer), "Counter: %u; RPM: %u; Wind speed: %.2f [m/s] %.2f [km/h]", counter, rpm, windSpeedMetersPerSecond, windSpeedKilometersPerHour);
+  int idStation = 1;
   
+  snprintf(buffer, sizeof(buffer),
+         "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\"}",
+         idStation, getSpeed());
+
   return String(buffer);
 }
 

@@ -2,6 +2,7 @@
 #define WINDINDICATOR_H
 
 #include "../sensor.h"
+#include "anemometer.h"
 
 // Wind Indicator DV10 Arduino sensor class
 class WindIndicatorSensor : public Sensor {
@@ -10,6 +11,7 @@ class WindIndicatorSensor : public Sensor {
     int Winddir = 0; // Declara o valor inicial em 0
     float valor = 0; // declara a variável inicial em 0
     String windDirection;
+    AnemometerSensor ane;
 
   public:
     WindIndicatorSensor(int win_pin);
@@ -74,7 +76,7 @@ String WindIndicatorSensor::sendSensorData() {
 
   snprintf(buffer, sizeof(buffer),
          "{\"idStation\": \"%d\", \"windSpeed\": \"%.2f\", \"windDirection\": \"%s\", \"windAngle\": \"%.1f\"}",
-         idStation, valor, windDirection.c_str(), Winddir);
+         idStation, ane.getSpeed(), windDirection.c_str(), Winddir);
 
   sendData("anemometer", String(buffer));
   return String(buffer);
