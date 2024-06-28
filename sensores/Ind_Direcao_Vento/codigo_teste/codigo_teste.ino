@@ -16,33 +16,33 @@ void loop() {
   Serial.println(" volt");
 
   // Determina a direção do vento baseada na tensão
-  if ((valor > 2.4 && valor <= 2.5) || (valor >= 0 && valor <= 0.16)) {
+  if ((valor >= 0 && valor <= 0.60)) {
     Winddir = 0;
-    Serial.println("Direção do Vento: Norte");
-  } else if (valor > 0.16 && valor <= 0.48) {
+    windDirection = "Norte";
+  } else if (valor > 0.60 && valor <= 0.80) {
     Winddir = 315;
-    Serial.println("Direção do Vento: Noroeste");
-  } else if (valor > 0.48 && valor <= 0.80) {
+    windDirection = "Noroeste";
+  } else if (valor > 0.80 && valor <= 0.93) {
     Winddir = 270;
-    Serial.println("Direção do Vento: Oeste");
-  } else if (valor > 0.80 && valor <= 1.12) {
+    windDirection = "Oeste";
+  } else if (valor > 0.93 && valor <= 1.08) {
     Winddir = 225;
-    Serial.println("Direção do Vento: Sudoeste");
-  } else if (valor > 1.12 && valor <= 1.44) {
+    windDirection = "Sudoeste";
+  } else if (valor > 1.08 && valor <= 1.15) {
     Winddir = 180;
-    Serial.println("Direção do Vento: Sul");
-  } else if (valor > 1.44 && valor <= 1.76) {
+    windDirection = "Sul";
+  } else if (valor > 1.15 && valor <= 1.40) {
     Winddir = 135;
-    Serial.println("Direção do Vento: Sudeste");
-  } else if (valor > 1.76 && valor <= 2.1) {
+    windDirection = "Sudeste";
+  } else if (valor > 1.40 && valor <= 1.85) {
     Winddir = 90;
-    Serial.println("Direção do Vento: Leste");
-  } else if (valor > 2.1 && valor <= 2.4) {
+    windDirection = "Leste";
+  } else if (valor > 1.85 && valor <= 2.50) {
     Winddir = 45;
-    Serial.println("Direção do Vento: Nordeste");
+    windDirection = "Nordeste";
   } else {
-    Winddir = 000;
-    Serial.println("Direção do Vento: Indeterminada");
+    Winddir = 000;  // Default to 0 if direction is indeterminate
+    windDirection = "Indeterminada";
   }
 
   // Imprime o ângulo de direção do vento

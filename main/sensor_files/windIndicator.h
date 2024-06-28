@@ -27,28 +27,28 @@ void WindIndicatorSensor::getData() {
   valor = analogRead(pin) * (5.0 / 4095.0); // Calcula a tensão para ESP32, onde a resolução ADC é 12-bit (0-4095) e a referência é 5V
 
   // Determina a direção do vento baseada na tensão
-  if ((valor > 2.4 && valor <= 2.5) || (valor >= 0 && valor <= 0.16)) {
+  if ((valor >= 0 && valor <= 0.60)) {
     Winddir = 0;
     windDirection = "Norte";
-  } else if (valor > 0.16 && valor <= 0.48) {
+  } else if (valor > 0.60 && valor <= 0.80) {
     Winddir = 315;
     windDirection = "Noroeste";
-  } else if (valor > 0.48 && valor <= 0.80) {
+  } else if (valor > 0.80 && valor <= 0.93) {
     Winddir = 270;
     windDirection = "Oeste";
-  } else if (valor > 0.80 && valor <= 1.12) {
+  } else if (valor > 0.93 && valor <= 1.08) {
     Winddir = 225;
     windDirection = "Sudoeste";
-  } else if (valor > 1.12 && valor <= 1.44) {
+  } else if (valor > 1.08 && valor <= 1.15) {
     Winddir = 180;
     windDirection = "Sul";
-  } else if (valor > 1.44 && valor <= 1.76) {
+  } else if (valor > 1.15 && valor <= 1.40) {
     Winddir = 135;
     windDirection = "Sudeste";
-  } else if (valor > 1.76 && valor <= 2.1) {
+  } else if (valor > 1.40 && valor <= 1.85) {
     Winddir = 90;
     windDirection = "Leste";
-  } else if (valor > 2.1 && valor <= 2.4) {
+  } else if (valor > 1.85 && valor <= 2.50) {
     Winddir = 45;
     windDirection = "Nordeste";
   } else {
