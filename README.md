@@ -3,7 +3,9 @@
 
 Este projeto visa desenvolver uma solução integrada para o monitoramento de condições meteorológicas, utilizando tecnologias de ponta em hardware e comunicações. Neste repositório, focaremos exclusivamente na montagem do hardware e na integração do sistema embarcado com um servidor remoto, detalhando cada componente usado, sua configuração e a interconexão necessária para a transmissão eficiente de dados.
 
-Para aqueles interessados na implementação completa, incluindo o servidor, interfaces de usuário, backend, e banco de dados, esses aspectos são abordados em um repositório separado. Essa divisão permite uma especialização mais aprofundada em cada área e facilita o gerenciamento e a colaboração no desenvolvimento do projeto.
+Para aqueles interessados na implementação completa, incluindo o servidor, interfaces de usuário, backend, banco de dados e frontend, esses aspectos são abordados em um repositório separado. Essa divisão permite uma especialização mais aprofundada em cada área e facilita o gerenciamento e a colaboração no desenvolvimento do projeto.
+
+[Link para o repositório](https://github.com/Ludmilahttps/EstacaoMeteorologica)
 
 ### Participantes 
 - Augusto Daleffe
@@ -14,8 +16,6 @@ Para aqueles interessados na implementação completa, incluindo o servidor, int
 
 ### Diagrama de comunicação
 ![diagrama_de_comunicacao](https://github.com/cyberdebb/estacao_meteorologica/assets/107296659/a105d673-0c97-417b-b6c3-62494302f3ab)
-
-[Link para o repositório](https://github.com/Ludmilahttps/EstacaoMeteorologica)
 
 ## 2. Materiais e métodos 
 
