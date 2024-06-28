@@ -136,8 +136,6 @@ Para instalar todas as bibliotecas necessárias, abra o Arduino IDE, vá em Sket
 Este vídeo demonstra a operação da estação meteorológica, enfocando a coleta e o registro de dados em tempo real:
 https://youtu.be/Y84vYU7VSpE
 
-## 3. Resultados
-
 ### Orçamento
 O levantamento dos preços de cada componente foi realizado através de pesquisa na internet, consultando sites especializados na venda de componentes eletrônicos como: Amazon, Eletrogate e Usinainfo. Como referência, o orçamento foi levantado em junho/2024. Todos os componentes utilizados na construção da estação e descritos na subseção de caracterização do sistema embarcado estão compilados na tabela:
 
@@ -148,5 +146,3 @@ O levantamento dos preços de cada componente foi realizado através de pesquisa
 | BMP280                                                                               | R$7.50   | Eletrogate |
 | Anemômetro Arduino + Indicador de Direção do Vento para Estação Meteorológica SVDV10 | R$749.55 | Usinainfo  |
 
-### Análise de resultados
-A seguir, será apresentada uma análise detalhada dos dados coletados pela estação meteorológica. Os resultados são fundamentais para validar a precisão e a eficácia do sistema em monitorar variáveis ambientais críticas, como temperatura, umidade, pressão atmosférica, velocidade e direção do vento, bem como precipitação. A seguir, exploramos os dados obtidos, comparando-os com padrões meteorológicos conhecidos e medições de referência para avaliar a confiabilidade do sistema.
