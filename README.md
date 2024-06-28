@@ -25,11 +25,11 @@ Esta seção descreve detalhadamente os componentes e processos utilizados na co
 
 ### Caracterização do sistema embarcado
 
-- [**ESP32**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/ESP32/README.md): Um módulo microcontrolador com Wi-Fi e Bluetooth integrados, ideal para aplicações IoT.
-- [**DHT11**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/DHT11/README.md): Sensor de temperatura e umidade, usado para medições ambientais básicas.
-- [**Pluviômetro**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Pluviometro/README.md): Dispositivo utilizado para medir a quantidade de precipitação.
-- [**Anemômetro Arduino SV10**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Anemometro/README.md): Sensor utilizado para medir a velocidade do vento.
-- [**Indicador de direção do vento Arduino DV10**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Ind_Direcao_Vento/README.md): Sensor utilizado para determinar a direção do vento.
+- [**ESP32**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/ESP32): Um módulo microcontrolador com Wi-Fi e Bluetooth integrados, ideal para aplicações IoT.
+- [**DHT11**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/DHT11): Sensor de temperatura e umidade, usado para medições ambientais básicas.
+- [**Pluviômetro**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Pluviometro): Dispositivo utilizado para medir a quantidade de precipitação.
+- [**Anemômetro Arduino SV10**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Anemometro): Sensor utilizado para medir a velocidade do vento.
+- [**Indicador de direção do vento Arduino DV10**](https://github.com/cyberdebb/estacao_meteorologica/blob/main/sensores/Ind_Direcao_Vento): Sensor utilizado para determinar a direção do vento.
 
 ### Diagrama dos componentes
 

@@ -18,8 +18,8 @@ Conta ainda com alta precisão e boa estabilidade já sendo calibrado de fábric
 ## Características
 - Anemômetro Arduino Fixo;  
 - Sensor de velocidade do vento;  
-- Pode ser utilizado com outros microcontroladores;  
-- Eixo com rolamento lacrado (livre de manutenção);  
+- Pode ser utilizado com outros microcontroladores;
+- Eixo com rolamento lacrado (livre de manutenção);  
 - Possui três copos em alumínio;  
 - Sensor magnético lacrado;  
 - Tipo copo (caneca);  
